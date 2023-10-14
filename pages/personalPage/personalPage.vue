@@ -142,7 +142,7 @@
 						<wallet-records />
 					</div>
 					<div v-else-if="index=='2-2'">
-						<withdraw-money />
+						<withdraw-money  @changekyc="changekyc"/>
 					</div>
 					<div v-else-if="index=='2-3'">
 						<withdrawal-status />
@@ -177,7 +177,7 @@
 					<div v-else-if="index=='8'">
 						<wallet-password />
 					</div>
-					<div v-else-if="index=='9'">
+					<div v-else-if="index=='2-5'">
 						<know-yourCustomer />
 					</div>
 					<div v-else-if="index=='10'">
@@ -277,6 +277,10 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			changekyc(param){
+				// console.log(param)
+				this.index = param
+			},
 			handleCustomButton() {
 			    // 执行自定义按钮的操作
 				const content = document.getElementById("print");

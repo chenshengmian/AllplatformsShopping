@@ -27,7 +27,7 @@
 				<div>ID：{{id}}</div>
 				<div>标题：{{title}}</div>
 				<div>时间：{{time}}</div>
-				<div>内容：{{detail}}</div>
+				<div v-html="detail"></div>
 				图片：<img :src="img" alt="">
 			</div>
 			<el-button size="mini" @tap="resert">返回列表</el-button>
@@ -136,27 +136,27 @@
 						_this.detail = detail
 						_this.img = thumb
 						// console.log(createtime)
-						_this.time = _this.timp(createtime)
+						_this.time = createtime
 					})
 					.catch(err => {
 						console.log(err)
 					})
 				_this.andiable = false
 			},
-			timp(ti) {
-				var temp = parseInt(ti)
-				var date = new Date(temp);
-				var Y = date.getFullYear() + '-';
-				// console.log(Y)
-				var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-				var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+			// timp(ti) {
+			// 	var temp = parseInt(ti)
+			// 	var date = new Date(temp);
+			// 	var Y = date.getFullYear() + '-';
+			// 	// console.log(Y)
+			// 	var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+			// 	var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
 
-				var h = (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours()) + ':';
-				var m = (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes()) + ':';
-				var s = (date.getSeconds() < 10 ? '0' + (date.getSeconds()) : date.getSeconds());
-				var strDate = Y + M + D + h + m + s;
-				return strDate
-			}
+			// 	var h = (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours()) + ':';
+			// 	var m = (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes()) + ':';
+			// 	var s = (date.getSeconds() < 10 ? '0' + (date.getSeconds()) : date.getSeconds());
+			// 	var strDate = Y + M + D + h + m + s;
+			// 	return strDate
+			// }
 		}
 	}
 </script>
