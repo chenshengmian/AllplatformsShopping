@@ -1,14 +1,15 @@
 <template>
 	<view class="content">
-		<el-container >
+		<el-container>
 			<el-dialog title="FELEMENT WHATSAPP & TELEGRAM 群主" :visible.sync="centerDialogVisible" :width="width">
-				<div id="print"  style="height: 800rpx;overflow-y: scroll;" v-html="tanccontent"></div>
+				<div id="print" ref="print" style="" v-html="tanccontent"></div>
 				<span slot="footer" class="dialog-footer">
-					<i class="el-icon-printer" @click="handleCustomButton" style="margin-right: 35rpx;margin-top: 20rpx;"></i> 
+					<i class="el-icon-printer" @click="handleCustomButton"
+						style="margin-right: 35rpx;margin-top: 20rpx;"></i>
 					<el-button type="primary" @click="changeads" size="mini">关闭弹窗不再显示</el-button>
 				</span>
 			</el-dialog>
-		
+
 			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse"
 				@select="handleSelect" style="height: 100vh;">
 				<image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image>
@@ -142,7 +143,7 @@
 						<wallet-records />
 					</div>
 					<div v-else-if="index=='2-2'">
-						<withdraw-money  @changekyc="changekyc" @wmindex="wmindex"/>
+						<withdraw-money @changekyc="changekyc" @wmindex="wmindex" />
 					</div>
 					<div v-else-if="index=='2-3'">
 						<withdrawal-status />
@@ -258,7 +259,7 @@
 				username: '',
 				width: '30%',
 				tanccontent: '<p>这是一段包含HTML标签的内容</p>',
-				type:0
+				type: 0,
 			}
 		},
 		mounted(param) {
@@ -277,25 +278,26 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			wmindex(param){
+			wmindex(param) {
 				this.index = param
 			},
-			kycindex(param){
+			kycindex(param) {
 				this.index = param
 			},
-			changekyc(param){
+			changekyc(param) {
 				// console.log(param)
 				this.index = param
 			},
 			handleCustomButton() {
-			    // 执行自定义按钮的操作
-				const content = document.getElementById("print");
-				console.log(content)
-				window.print(content)
+				this.$print(this.$refs.print)
+			
 			},
 			getAdstatus(param) {
 				// console.log(param)
-				const { type,ad } = param
+				const {
+					type,
+					ad
+				} = param
 				let self = this
 				this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.agr')
 					.then(res => {
@@ -307,12 +309,21 @@
 							}
 						} = res
 						self.centerDialogVisible = true
-						if(type==0){
-							self.tanccontent = self.htmlEntityDecode(agrcontent)
-						}else{
-							self.tanccontent = self.htmlEntityDecode(content)
+						if (type == 0) {
+							let str = self.htmlEntityDecode(agrcontent)
+							const styleToAdd =
+								'overflow-x: hidden !important; max-width: 100% !important; white-space: normal !important;';
+							str = str.replace(/(text-wrap: nowrap;)/g, `$1 ${styleToAdd}`);
+							self.tanccontent = str
+
+						} else {
+							let str = self.htmlEntityDecode(content)
+							const styleToAdd =
+								'overflow-x: hidden !important; max-width: 100% !important; white-space: normal !important;';
+							str = str.replace(/(text-wrap: nowrap;)/g, `$1 ${styleToAdd}`);
+							self.tanccontent = str
 						}
-				
+
 					})
 					.catch(err => {
 						console.log(err)
@@ -326,7 +337,7 @@
 					'&quot;': '"',
 					'&#39;': "'",
 				};
-			
+
 				// 替换HTML实体
 				return str.replace(/&amp;|&lt;|&gt;|&quot;|&#39;/g, (match) => entityMap[match]);
 			},
@@ -365,9 +376,9 @@
 						// if(self.type==0){
 						// 	self.tanccontent = self.htmlEntityDecode(agrcontent)
 						// }else{
-							self.tanccontent = self.htmlEntityDecode(content)
+						self.tanccontent = self.htmlEntityDecode(content)
 						// }
-				
+
 					})
 					.catch(err => {
 						console.log(err)
@@ -406,7 +417,7 @@
 					.catch(err => {
 						console.log(err)
 					})
-	
+
 				const {
 					userinfo
 				} = uni.getStorageSync('tokenArray')
@@ -480,7 +491,7 @@
 									message
 								}
 							} = res
-							
+
 							self.$message({
 								message: message,
 								center: true
@@ -489,7 +500,7 @@
 								url: '/pages/index/index'
 							})
 						} else {
-	
+
 						}
 					})
 					.catch(err => {
@@ -534,6 +545,7 @@
 					this.width = '90%'
 				} else {
 					this.drawerSize = '15%'
+					this.width = '30%'
 				}
 			},
 			handleResize() {
@@ -546,6 +558,7 @@
 						this.width = '90%'
 					} else {
 						this.drawerSize = '15%'
+						this.width = '30%'
 					}
 				}
 			},
@@ -570,7 +583,19 @@
 	}
 </script>
 <style>
-
+	/deep/table{
+		width: auto !important;
+	}
+	/deep/.el-table__empty-block{
+		width: auto !important;
+	}
+	@page { margin-bottom: 20;margin-top: 20; }
+	/* .perpage {page-break-after:always;} */
+	/* /deep/#print p span{
+		overflow-x: hidden !important;
+		max-width: 100% !important;
+		white-space: normal !important;
+	} */
 	.colorb {
 		background-color: #7F7F7F;
 	}
@@ -754,8 +779,7 @@
 
 	.headerTop {
 		display: flex;
-		/* z-index: 9999; */
-		/* width: 100%; */
+		top: 0;
 		position: fixed;
 		background-color: #fff;
 	}

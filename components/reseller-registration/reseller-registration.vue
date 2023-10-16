@@ -338,25 +338,32 @@
 			},
 			submitForm(formName) {
 				let self = this
-				const {credit2} = self.userinfo
-				let id = self.ruleForm.membershipLevel
-				let data = self.ruleForm.datas
-				const ball = data.find(res=>{
-					return parseInt(res.id) == id
+				self.$refs[formName].validate((valid) => {
+					if(valid){
+						const {credit2} = self.userinfo
+						let id = self.ruleForm.membershipLevel
+						let data = self.ruleForm.datas
+						const ball = data.find(res=>{
+							return parseInt(res.id) == id
+						})
+						// console.log(ball)
+						const { price,levelname } = ball
+						if(parseFloat(price)>parseFloat(credit2)){
+							self.$message('余额不足！');
+						}else{
+							self.dialogVisible = true
+							self.isresgistra = '是否使用余额'+credit2+'购买'+levelname+'消费'+price+'元'
+						}
+					}else{
+						return false;
+					}
 				})
-				// console.log(ball)
-				const { price,levelname } = ball
-				if(parseFloat(price)>parseFloat(credit2)){
-					self.$message('余额不足！');
-				}else{
-					self.dialogVisible = true
-					self.isresgistra = '是否使用余额'+credit2+'购买'+levelname+'消费'+price+'元'
-				}
+				
 			},
 			goredistration(){
 				let self = this
 				self.dialogVisible = false
-				// if(self.code == self.emailCode&&self.code != ''){
+				if(self.code == self.emailCode&&self.code != ''){
 					const { userinfo } = uni.getStorageSync('tokenArray')
 					if(self.ruleForm.superiorID == ''){
 						 self.ruleForm.superiorID = userinfo
@@ -388,10 +395,10 @@
 						.catch(res=>{
 							console.log(res)
 						})
-				// }
-				// else{
-				// 	self.$message('邮箱验证码错误！');
-				// }
+				}
+				else{
+					self.$message('邮箱验证码错误！');
+				}
 			},
 			handlePrefixChange() {
 			    // 处理地区号码前缀变化的逻辑

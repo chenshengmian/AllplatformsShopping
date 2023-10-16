@@ -174,7 +174,7 @@
 	}
 
 	.sumbit {
-		margin-left: 840rpx;
+		/* margin-left: 840rpx; */
 		margin-top: 10rpx;
 	}
 
@@ -186,6 +186,7 @@
 	@media screen and (max-width: 990px) {
 		.el-select{
 			margin-top: 20rpx;
+			width: 500rpx;
 		}
 		.mony {
 			display: grid;

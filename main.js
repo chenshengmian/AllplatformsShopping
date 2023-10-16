@@ -10,8 +10,10 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'	
 import request  from './utils/request.js'
+import print from './utils/print.js'
 import * as echarts from 'echarts'
 Vue.use(ElementUI)
+Vue.use(print)
 Vue.prototype.$axios = request
 Vue.config.productionTip = false
 App.mpType = 'app'

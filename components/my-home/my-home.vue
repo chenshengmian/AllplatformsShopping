@@ -146,9 +146,7 @@
 				<div style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">Total Withdraw:{{totalWithdraw}}</div>
 			</el-card>
 
-
-		</div>
-		<div style="width: 100%;">
+			
 			<el-card class="box-card news">
 				<div slot="header" class="clearfix headers">
 					<div class="yearmonth">
@@ -295,12 +293,13 @@
 </script>
 
 <style>
-	/* .frist{
-		margin-right: 40rpx;
-	} */
-	/* .grid-container .box-card{
-		padding: 20rpx;
-	} */
+	/deep/table{
+		width: auto !important;
+	}
+	/deep/.el-table__empty-block{
+		width: auto !important;
+	}
+	
 	.bonustype{
 		display: flex;
 		justify-content: space-between;
@@ -379,20 +378,6 @@
 		height: 100%;
 	}
 
-	/* .second{
-		margin-right: 40rpx;
-	}
-	.three{
-		margin-right: 40rpx;
-	}
-	.wu{
-		margin-right: 40rpx;
-		margin-top: 40rpx;
-	} */
-	/* .sex{
-		margin-top: 40rpx;
-	} */
-
 	.second::after,
 	.three::after,
 	.four::after {
@@ -414,20 +399,15 @@
 		justify-content: space-around;
 	}
 
-	.news {
-		margin-top: 50rpx;
-	}
-
 	.grid-container {
 		display: grid;
 		grid-template-rows: 250rpx 1500rpx;
-		grid-template-columns: 31% 23% 23% 23%;
-		/* width: 95%; */
-		/* gap: 50rpx; */
+		grid-template-columns: 28% 23% 23% 23%;
+		gap: 30rpx;
 	}
 
-	.box-card {
-		grid-column: span 1;
+	.news {
+		grid-column: span 4;
 		background-color: #fff;
 		padding: 20rpx;
 	}

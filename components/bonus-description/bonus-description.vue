@@ -44,6 +44,7 @@
 						<el-button type="primary" size="medium">提款状况查询</el-button>
 					</div>
 				</div>
+				<div ref="print">
 				<div class="bonuscontent">
 					<div class="text item bonusleft" >
 						<div>经销商编号 : <span style="margin-left: 10rpx; display: inline-block;"> MY60122122378</span>
@@ -72,116 +73,122 @@
 					</div>
 				</div>
 				<div class="tabletitle">Retail Bonus (Personal)</div>
-				<el-table :data="tableData" class="custom-table">
+				<el-table :data="tableData" >
 
-					<el-table-column prop="description" label="日期" >
+					<el-table-column prop="description" label="日期" align="center">
 					</el-table-column>
-					<el-table-column prop="into" label="经销商编号">
+					<el-table-column prop="into" label="经销商编号" align="center">
 					</el-table-column>
-					<el-table-column prop="date" label="经销商名字">
+					<el-table-column prop="date" label="经销商名字" align="center">
 					</el-table-column>
-					<el-table-column prop="out" label="Sales Order No">
+					<el-table-column prop="out" label="Sales Order No" align="center">
 					</el-table-column>
-					<el-table-column prop="balance" label="奖金">
+					<el-table-column prop="balance" label="奖金" align="center">
 					</el-table-column>
 				</el-table>
 				<div class="tabletitle">Retail Bonus (Overriding)</div>
 				<el-table :data="tableData" class="custom-table">
 				
-					<el-table-column prop="description" label="日期" >
+					<el-table-column prop="description" label="日期"  align="center">
 					</el-table-column>
-					<el-table-column prop="into" label="经销商编号">
+					<el-table-column prop="into" label="经销商编号" align="center">
 					</el-table-column>
-					<el-table-column prop="date" label="经销商名字">
+					<el-table-column prop="date" label="经销商名字" align="center">
 					</el-table-column>
-					<el-table-column prop="out" label="Sales Order No">
+					<el-table-column prop="out" label="Sales Order No" align="center">
 					</el-table-column>
-					<el-table-column prop="balance" label="奖金">
+					<el-table-column prop="balance" label="奖金" align="center">
 					</el-table-column>
 				</el-table>
 				<div class="tabletitle">Network Bonus</div>
 				<el-table :data="tableData" class="custom-table">
 				
-					<el-table-column prop="description" label="日期" >
+					<el-table-column prop="description" label="日期"  align="center">
 					</el-table-column>
-					<el-table-column prop="into" label="经销商编号">
+					<el-table-column prop="into" label="经销商编号" align="center">
 					</el-table-column>
-					<el-table-column prop="date" label="经销商名字">
+					<el-table-column prop="date" label="经销商名字" align="center">
 					</el-table-column>
-					<el-table-column prop="out" label="Sales Order No">
+					<el-table-column prop="out" label="Sales Order No" align="center">
 					</el-table-column>
-					<el-table-column prop="balance" label="奖金">
+					<el-table-column prop="balance" label="奖金" align="center">
 					</el-table-column>
 				</el-table>
 				<div class="tabletitle">Matching Bonus</div>
 				<el-table :data="tableData" class="custom-table">
 				
-					<el-table-column prop="description" label="日期" >
+					<el-table-column prop="description" label="日期"  align="center">
 					</el-table-column>
-					<el-table-column prop="into" label="经销商编号">
+					<el-table-column prop="into" label="经销商编号" align="center">
 					</el-table-column>
-					<el-table-column prop="date" label="经销商名字">
+					<el-table-column prop="date" label="经销商名字" align="center">
 					</el-table-column>
-					<el-table-column prop="out" label="Sales Order No">
+					<el-table-column prop="out" label="Sales Order No" align="center">
 					</el-table-column>
-					<el-table-column prop="balance" label="奖金">
+					<el-table-column prop="balance" label="奖金" align="center">
 					</el-table-column>
 				</el-table>
 				<div class="tabletitle">Travel Bonus</div>
 				<el-table :data="tableData" class="custom-table">
 				
-					<el-table-column prop="description" label="日期" >
+					<el-table-column prop="description" label="日期"  align="center">
 					</el-table-column>
-					<el-table-column prop="into" label="经销商编号">
+					<el-table-column prop="into" label="经销商编号" align="center">
 					</el-table-column>
-					<el-table-column prop="date" label="经销商名字">
+					<el-table-column prop="date" label="经销商名字" align="center">
 					</el-table-column>
-					<el-table-column prop="out" label="Sales Order No">
+					<el-table-column prop="out" label="Sales Order No" align="center">
 					</el-table-column>
-					<el-table-column prop="balance" label="奖金">
+					<el-table-column prop="balance" label="奖金" align="center">
 					</el-table-column>
 				</el-table>
 				<div class="tabletitle">Gold Millionaire Pool</div>
 				<el-table :data="tableData" class="custom-table">
 				
-					<el-table-column prop="description" label="日期" >
+					<el-table-column prop="description" label="日期"  align="center">
 					</el-table-column>
-					<el-table-column prop="into" label="经销商编号">
+					<el-table-column prop="into" label="经销商编号" align="center">
 					</el-table-column>
-					<el-table-column prop="date" label="经销商名字">
+					<el-table-column prop="date" label="经销商名字" align="center">
 					</el-table-column>
-					<el-table-column prop="out" label="Sales Order No">
+					<el-table-column prop="out" label="Sales Order No" align="center">
 					</el-table-column>
-					<el-table-column prop="balance" label="奖金">
+					<el-table-column prop="balance" label="奖金" align="center">
 					</el-table-column>
 				</el-table>
 				<div class="tabletitle">Platinm Millionaire Pool</div>
 				<el-table :data="tableData" class="custom-table">
 				
-					<el-table-column prop="description" label="日期" >
+					<el-table-column prop="description" label="日期"  align="center">
 					</el-table-column>
-					<el-table-column prop="into" label="经销商编号">
+					<el-table-column prop="into" label="经销商编号" align="center">
 					</el-table-column>
-					<el-table-column prop="date" label="经销商名字">
+					<el-table-column prop="date" label="经销商名字" align="center">
 					</el-table-column>
-					<el-table-column prop="out" label="Sales Order No">
+					<el-table-column prop="out" label="Sales Order No" align="center">
 					</el-table-column>
-					<el-table-column prop="balance" label="奖金">
+					<el-table-column prop="balance" label="奖金" align="center">
 					</el-table-column>
 				</el-table>
 				<div class="tabletitle">Diamond Millionaire Pool</div>
 				<el-table :data="tableData" class="custom-table">
-					<el-table-column prop="description" label="日期" >
+					<el-table-column prop="description" label="日期"  align="center">
 					</el-table-column>
-					<el-table-column prop="into" label="经销商编号">
+					<el-table-column prop="into" label="经销商编号" align="center">
 					</el-table-column>
-					<el-table-column prop="date" label="经销商名字">
+					<el-table-column prop="date" label="经销商名字" align="center">
 					</el-table-column>
-					<el-table-column prop="out" label="Sales Order No">
+					<el-table-column prop="out" label="Sales Order No" align="center">
 					</el-table-column>
-					<el-table-column prop="balance" label="奖金">
+					<el-table-column prop="balance" label="奖金" align="center">
 					</el-table-column>
 				</el-table>
+				</div>
+				<div style="display: flex;justify-content: center;">
+					<i class="el-icon-printer" @click="handleCustom"
+						style="margin-top: 30rpx;font-size: 50rpx;"></i>
+				</div>
+				
 			</el-card>
 		</div>
 	</view>
@@ -195,6 +202,7 @@
 				mouth: '',
 				year: '',
 				yearArr: [],
+				tableData:[]
 			};
 		},
 		mounted() {
@@ -208,12 +216,21 @@
 				const mouthNew = current.getMonth()
 				this.mouth = mouthNew + 1
 				this.year = yearNew
+			},
+			handleCustom(){
+				this.$print(this.$refs.print)
 			}
 		}
 	}
 </script>
 
 <style>
+	/deep/table{
+		width: auto !important;
+	}
+	/deep/.el-table__empty-block{
+		width: auto !important;
+	}
 	.bonusleft div{
 		margin-top: 18rpx;
 	}
