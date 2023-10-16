@@ -77,7 +77,7 @@
 			</el-row>
 			<el-row>
 				<el-col :span="elleft"></el-col>
-				<el-col :span="elright" style="margin-top: 25rpx;"><el-button size="mini">提款</el-button></el-col>
+				<el-col :span="elright" style="margin-top: 25rpx;"><el-button size="mini" @tap="handleWithdrawal">提款</el-button></el-col>
 			</el-row>
 		</el-card>
 
@@ -91,7 +91,7 @@
 			return {
 				elleft: 5,
 				elright: 8,
-				checked: true,
+				checked: false,
 				Identitycard: 0,
 				AccountHolder: '',
 				eamil: '',
@@ -166,6 +166,29 @@
 					this.elleft = 5
 					this.elright = 8
 				}
+			},
+			handleWithdrawal(){
+				let _this = this
+				let type = 0
+				_this.checked ? type = 1 : type = 0
+				console.log(type)
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.kyc.withdrawalmoney&type=' + type + '&money=' + _this.mony)
+					.then(res=>{
+						console.log(res)
+						const { status,result:{message}} = res
+						let msgstatus = status == 0 ? 'error' : 'success'
+						_this.$message({
+							showClose: true,
+							message: message,
+							type: msgstatus
+						})
+						if(status==1){
+							_this.$emit('wmindex','2-3')
+						}
+					})
+					.catch(err=>{
+						console.log(err)
+					})
 			},
 			handleResize() {
 				const newScreenWidth = window.innerWidth;

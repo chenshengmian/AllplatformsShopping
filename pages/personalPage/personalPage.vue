@@ -142,7 +142,7 @@
 						<wallet-records />
 					</div>
 					<div v-else-if="index=='2-2'">
-						<withdraw-money  @changekyc="changekyc"/>
+						<withdraw-money  @changekyc="changekyc" @wmindex="wmindex"/>
 					</div>
 					<div v-else-if="index=='2-3'">
 						<withdrawal-status />
@@ -178,7 +178,7 @@
 						<wallet-password />
 					</div>
 					<div v-else-if="index=='2-5'">
-						<know-yourCustomer />
+						<know-yourCustomer @kycindex="kycindex" />
 					</div>
 					<div v-else-if="index=='10'">
 						<announcement-table />
@@ -277,6 +277,12 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			wmindex(param){
+				this.index = param
+			},
+			kycindex(param){
+				this.index = param
+			},
 			changekyc(param){
 				// console.log(param)
 				this.index = param

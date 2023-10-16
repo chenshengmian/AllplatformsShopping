@@ -1,31 +1,41 @@
 <template>
 	<view>
 		<el-card>
-			<el-form :model="ruleForm"  :label-position="labelPosition"  :rules="rules" ref="ruleForm" label-width="200px" class="demo-ruleForm">
-				<el-form-item label="Identity card (Front) 身份证前" prop="idcard_pre">
+			<el-form :model="ruleForm" :label-position="labelPosition" :rules="rules" ref="ruleForm" label-width="260px"
+				class="demo-ruleForm">
+				<el-form-item label="Identity card (Front) 身份证前:" prop="idcard_pre">
 					<el-input v-model="ruleForm.idcard_pre"></el-input>
 				</el-form-item>
-				<el-form-item label="Account Holder 持卡者名字" prop="account_holder">
+				<el-form-item label="Account Holder 持卡者名字:" prop="account_holder">
 					<el-input v-model="ruleForm.account_holder"></el-input>
 				</el-form-item>
-				<el-form-item label="Account Holder 持卡者名字" prop="account_holder">
-					<el-input v-model="ruleForm.account_holder"></el-input>
+				<el-form-item label="Bank Name 银行名字:" prop="bank_name">
+					<el-input v-model="ruleForm.bank_name"></el-input>
 				</el-form-item>
-				<el-form-item label="Bank Name 银行名字" prop="bank_name">
-					<el-switch v-model="ruleForm.bank_name"></el-switch>
+				<el-form-item label="Bank Branch 银行分行:" prop="bank_branch">
+					<el-input v-model="ruleForm.bank_branch"></el-input>
 				</el-form-item>
-				<el-form-item label="Bank Branch 银行分行" prop="bank_branch">
-					<el-switch v-model="ruleForm.bank_branch"></el-switch>
+				<el-form-item label="Bank Account Number 户口号码:" prop="bank_account_number">
+					<el-input v-model="ruleForm.bank_account_number"></el-input>
 				</el-form-item>
-				<el-form-item label="Bank Account Number 户口号码" prop="bank_account_number">
-					<el-switch v-model="ruleForm.bank_account_number"></el-switch>
+				<el-form-item label="Swift code:" prop="swift_code">
+					<el-input v-model="ruleForm.swift_code"></el-input>
 				</el-form-item>
-				<el-form-item label="活动形式" prop="desc">
-					<el-input type="textarea" v-model="ruleForm.desc"></el-input>
+				<el-form-item label="Supporting Document 支持文件:" prop="supporting_document">
+					<el-input v-model="ruleForm.supporting_document"></el-input>
+				</el-form-item>
+				<el-form-item label="ID/ Passport Number 身份证号码:" prop="id_number">
+					<el-input v-model="ruleForm.id_number"></el-input>
+				</el-form-item>
+				<el-form-item label="身份证正面照片:" prop="idcard_imageone">
+					<el-input v-model="ruleForm.idcard_imageone"></el-input>
+				</el-form-item>
+				<el-form-item label="Email:" prop="email">
+					<el-input v-model="ruleForm.email"></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-					<el-button @click="resetForm('ruleForm')">重置</el-button>
+					<el-button type="primary" @tap="submitForm('ruleForm')">{{handlesubit}}</el-button>
+					<!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
 				</el-form-item>
 			</el-form>
 		</el-card>
@@ -36,67 +46,76 @@
 	export default {
 		data() {
 			return {
-				labelPosition:'right',
+				labelPosition: 'right',
+				handlesubit: '',
 				ruleForm: {
-					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
+					idcard_pre: '',
+					account_holder: '',
+					bank_name: '',
+					bank_branch: '',
+					bank_account_number: '',
+					swift_code: '',
+					supporting_document: '',
+					id_number: '',
+					idcard_imageone: '',
+					email: '',
+					type: 0,
 				},
 				rules: {
-					name: [{
-							required: true,
-							message: '请输入活动名称',
-							trigger: 'blur'
-						},
-						{
-							min: 3,
-							max: 5,
-							message: '长度在 3 到 5 个字符',
-							trigger: 'blur'
-						}
-					],
-					region: [{
+					idcard_pre: [{
 						required: true,
-						message: '请选择活动区域',
-						trigger: 'change'
-					}],
-					date1: [{
-						type: 'date',
-						required: true,
-						message: '请选择日期',
-						trigger: 'change'
-					}],
-					date2: [{
-						type: 'date',
-						required: true,
-						message: '请选择时间',
-						trigger: 'change'
-					}],
-					type: [{
-						type: 'array',
-						required: true,
-						message: '请至少选择一个活动性质',
-						trigger: 'change'
-					}],
-					resource: [{
-						required: true,
-						message: '请选择活动资源',
-						trigger: 'change'
-					}],
-					desc: [{
-						required: true,
-						message: '请填写活动形式',
+						message: '请输入身份证',
 						trigger: 'blur'
+					}],
+					account_holder: [{
+						required: true,
+						message: '请输入持卡者姓名',
+						trigger: 'blur'
+					}],
+					bank_name: [{
+						required: true,
+						message: '请输入银行名字',
+						trigger: 'blur'
+					}],
+					bank_branch: [{
+						required: true,
+						message: '请输入银行分行',
+						trigger: 'blur'
+					}],
+					bank_account_number: [{
+						required: true,
+						message: '请输入银行分行',
+						trigger: 'blur'
+					}],
+					swift_code: [{
+						required: true,
+						message: '请输入Swift code',
+						trigger: 'blur'
+					}],
+					supporting_document: [{
+						required: true,
+						message: '请上传支持文件',
+						trigger: 'blur'
+					}],
+					id_number: [{
+						required: true,
+						message: '请填写身份证号码',
+						trigger: 'blur'
+					}],
+					email: [{
+						required: true,
+						message: '请填写Email',
+						trigger: 'blur'
+					},{
+						type: 'email', 
+						message: '请输入正确的邮箱地址',
+						trigger: ['blur', 'change']
 					}]
 				}
 			};
 		},
 		mounted() {
+			this.getkyc()
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
 			window.addEventListener('resize', this.handleResize); // 监听窗口大小变化
 		},
@@ -104,6 +123,25 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			async getkyc() {
+				let _this = this
+				await _this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.kyc')
+					.then(res => {
+						const {
+							status,
+						} = res
+						if (status == 1) {
+							_this.handlesubit = '修改'
+							_this.ruleForm.type = 2
+						} else {
+							_this.handlesubit = '立即创建'
+							_this.ruleForm.type = 1
+						}
+					})
+					.catch(err => {
+						console.log(err)
+					})
+			},
 			getScreenWidth() {
 				this.screenWidth = window.innerWidth;
 				if (this.screenWidth <= 990) {
@@ -126,18 +164,44 @@
 				}
 			},
 			submitForm(formName) {
-				this.$refs[formName].validate((valid) => {
+				let _this = this
+				_this.$refs[formName].validate((valid) => {
 					if (valid) {
-						alert('submit!');
+						// console.log(_this.ruleForm)
+						_this.$axios.post(
+								'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.kyc.dealkyc', _this
+								.ruleForm)
+							.then(res => {
+								// console.log(res)
+								const {
+									status,
+									result: {
+										message
+									}
+								} = res
+								if (status == 1) {
+									_this.$message({
+										showClose: true,
+										message: message,
+										type: 'success'
+									});
+									_this.$emit('kycindex', '2-2')
+								} else {
+									_this.$message({
+										showClose: true,
+										message: message,
+										type: 'error'
+									})
+								}
+							})
+							.catch(err => {
+								console.log(err)
+							})
 					} else {
-						console.log('error submit!!');
 						return false;
 					}
 				});
 			},
-			resetForm(formName) {
-				this.$refs[formName].resetFields();
-			}
 		}
 	}
 </script>
