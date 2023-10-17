@@ -22,19 +22,30 @@
 					<el-input v-model="ruleForm.swift_code"></el-input>
 				</el-form-item>
 				<el-form-item label="Supporting Document 支持文件:" prop="supporting_document">
-					<el-input v-model="ruleForm.supporting_document"></el-input>
+					<el-input v-model="ruleForm.supporting_document" :disabled="true"></el-input>
+					<el-upload
+						action="https://mlxy.hgwl633.com/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.uploadfile"
+						:on-success="hanldeSuccess" :on-remove="handleRemove">
+						<el-button slot="trigger" size="small" type="primary"
+							style="margin-top: 20rpx;">选取文件</el-button></el-upload>
 				</el-form-item>
 				<el-form-item label="ID/ Passport Number 身份证号码:" prop="id_number">
 					<el-input v-model="ruleForm.id_number"></el-input>
 				</el-form-item>
 				<el-form-item label="身份证正面照片:" prop="idcard_imageone">
-					<el-input v-model="ruleForm.idcard_imageone"></el-input>
+					<!-- <el-input v-model="ruleForm.idcard_imageone"></el-input> -->
+					<el-upload
+						accept=".jpeg,.png,.jpg,.bmp,.gif"
+						action="https://mlxy.hgwl633.com/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.uploadfile"
+						:on-success="hanldeSuccessp" :on-remove="handleRemovep" list-type="picture">
+						<el-button slot="trigger" size="small" type="primary"
+							style="margin-top: 20rpx;">选取图片</el-button></el-upload>
 				</el-form-item>
 				<el-form-item label="Email:" prop="email">
 					<el-input v-model="ruleForm.email"></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary" @tap="submitForm('ruleForm')">{{handlesubit}}</el-button>
+					<el-button type="primary" @tap="submitForm('ruleForm')" size="small">{{handlesubit}}</el-button>
 					<!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
 				</el-form-item>
 			</el-form>
@@ -48,6 +59,7 @@
 			return {
 				labelPosition: 'right',
 				handlesubit: '',
+				fromdata: '',
 				ruleForm: {
 					idcard_pre: '',
 					account_holder: '',
@@ -95,7 +107,7 @@
 					supporting_document: [{
 						required: true,
 						message: '请上传支持文件',
-						trigger: 'blur'
+						trigger: 'change'
 					}],
 					id_number: [{
 						required: true,
@@ -106,8 +118,8 @@
 						required: true,
 						message: '请填写Email',
 						trigger: 'blur'
-					},{
-						type: 'email', 
+					}, {
+						type: 'email',
 						message: '请输入正确的邮箱地址',
 						trigger: ['blur', 'change']
 					}]
@@ -123,6 +135,52 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+			handleRemove(file) {
+				// console.log(file)
+				this.ruleForm.supporting_document = ''
+			},
+			handleRemovep(file) {
+				// console.log(file)
+				this.ruleForm.idcard_imageone = ''
+			},
+			hanldeSuccessp(res){
+				// console.log(res)
+				const {
+					status,
+					result: {
+						allurl,
+						url
+					}
+				} = res
+				if (status == 0) {
+					this.$message.error('上传失败');
+				} else {
+					this.$message({
+						message: '上传成功',
+						type: 'success'
+					});
+				}
+				this.ruleForm.idcard_imageone = url
+			},
+			hanldeSuccess(response) {
+				// console.log(response)
+				const {
+					status,
+					result: {
+						allurl,
+						url
+					}
+				} = response
+				if (status == 0) {
+					this.$message.error('上传失败');
+				} else {
+					this.$message({
+						message: '上传成功',
+						type: 'success'
+					});
+				}
+				this.ruleForm.supporting_document = url
+			},
 			async getkyc() {
 				let _this = this
 				await _this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.kyc')

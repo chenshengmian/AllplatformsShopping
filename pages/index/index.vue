@@ -139,131 +139,12 @@
 <style>
 
 	
-
-	.setting {
-		margin-left: 20rpx;
-		display: inline-block;
-		animation: rotation 2s infinite linear;
-	}
-
-	.drawerright {
-		font-weight: 1000;
-	}
-
-	@keyframes rotation {
-		from {
-			transform: rotate(0deg);
-		}
-
-		to {
-			transform: rotate(360deg);
-		}
-	}
-
-	.el-menu-vertical-demo:not(.el-menu--collapse) {
-		width: 400rpx;
-		min-height: 800rpx;
-	}
-
-	.userLogo {
-		margin-left: 10rpx;
-		padding: 30rpx;
-		width: 100rpx;
-		height: 100rpx;
-	}
-
-	.userLo {
-		padding: 22rpx;
-		width: 90%;
-		height: 80rpx;
-		margin-left: 20rpx;
-		margin-top: 18rpx;
-	}
-
-	.el-switch {
-		margin-left: 25rpx;
-	}
-
-	.el-row span {
-		display: inline-block;
-		margin-top: 20rpx;
-		margin-left: 20rpx;
-	}
-
-	.changeStatu,
-	.changeStatuw {
-		font-size: 45rpx;
-		margin-top: 30rpx;
-		cursor: pointer;
-	}
-
-	@media screen and (max-width: 1400px) {
-		.userLo {
-			width: 70%;
-		}
-	}
-
 	@media screen and (max-width: 990px) {
-		.el-header {
-			height: 120rpx !important;
-			/* position: fixed; */
-			/* top:0; */
-		}
 
 		.homepage {
 			width: 100% !important;
 		}
 
-		.changeStatu {
-			display: none;
-		}
-
-		.changeStatuw {
-			display: block !important;
-		}
-
-		.asos,
-		.fullsc,
-		.placeholder {
-			display: none;
-		}
-
-		.changeStatus1 {
-			display: block !important;
-			font-size: 50rpx;
-			margin-top: 30rpx;
-			cursor: pointer;
-			width: 100%;
-		}
-
-		.smalllogo {
-			width: 55rpx;
-			height: 55rpx;
-		}
-
-		.atvatr {
-			width: 84%;
-			left: 0rpx;
-		}
-
-		.ableta {
-			position: fixed;
-			width: 400rpx;
-			top: 100rpx;
-			margin-top: 20rpx;
-			z-index: 99;
-		}
-
-		.newplaceholder {
-			width: 0rpx;
-			height: 100vh;
-			visibility: hidden;
-			/* 或者使用 opacity: 0; */
-		}
-
-		.footer {
-			font-size: 20rpx;
-		}
 	}
 
 	.homepage {
@@ -271,43 +152,8 @@
 		height: 100vh;
 	}
 
-	.changeStatus1,
-	.changeStatuw {
-		display: none;
-	}
+	
 
-	.el-main {
-		height: 86vh;
-		/* position: absolute; */
-		top: 100rpx;
-		z-index: 1;
-		/* width: 100%; */
-	}
-
-	.el-menu {
-		position: fixed;
-		/* right: 400rpx; */
-	}
-
-
-	.headerTop {
-		display: flex;
-		/* z-index: 9999; */
-		/* width: 100%; */
-		position: fixed;
-		background-color: #fff;
-	}
-
-	.el-header {
-		height: 120rpx;
-	}
-
-	.footer {
-		line-height: 120rpx;
-		text-align: center;
-		font-size: 26rpx;
-		color: rgb(91, 98, 107);
-	}
 
 	/* 设置滚动条的轨道样式 */
 	::-webkit-scrollbar {

@@ -39,12 +39,28 @@
 								</el-carousel-item>
 							</el-carousel>
 						</div>
-
-						<div class="scrolling-container" style="background-color: #E8F3FE;margin:20rpx 0rpx;height: 80rpx;line-height: 80rpx;">
-							<div :class="['subtitle-item', { 'hidden': index !== currentIndex }]"
-								v-for="(subtitle, index) in subtitles" :key="index">
-								{{ subtitle }}
-							</div>
+						
+						<!-- 公告详情 -->
+						<el-dialog :title="adtitle" :visible.sync="dialogTableVisible" :modal='false'>
+							<el-card>
+								<img :src="adimage" class="images" v-show="have">
+								      <div style="padding: 14px;">
+								        <span v-html="adcontont"></span>
+								        <div class="bottom clearfix">
+								          <time class="time">{{ currentDate }}</time>
+								          <el-button type="text" class="button" @tap="handleSure">确定</el-button>
+								        </div>
+								      </div>
+							</el-card>
+						</el-dialog>
+						
+						<div class="scrolling-container"
+							style="background-color: #E8F3FE;margin:20rpx 0rpx;height: 80rpx;">
+							<vue-seamless-scroll :data="subtitles" class="scroll" :class-option="defaultOption">
+								<div v-for="item in subtitles" class="item" style="text-align: center;cursor:pointer;">
+									<div @tap="handeladDetail(item.id)">{{ item.title }}</div>
+								</div>
+							</vue-seamless-scroll>
 						</div>
 
 						<div style="margin: 20rpx 0rpx;">
@@ -54,8 +70,9 @@
 						<el-row>
 							<el-col :span="span" v-for="item in prounddata">
 								<el-card :body-style="{ padding: '20px' }" @click.native="handelDetail(item.id)">
-									<img :src="item.thumb" class="image">
+									<img :src="item.thumb" class="image" >
 									<div style="padding: 14px;">
+										<!-- <h6>内容：</h6> -->
 										<span>{{item.title}}</span>
 										<div class="bottom clearfix">
 											<time class="time">MYR {{ item.productprice }}</time>
@@ -109,6 +126,7 @@
 		name: "website-homepage",
 		data() {
 			return {
+				dialogTableVisible:false,
 				input3: '',
 				select: '',
 				tabbleTap: {},
@@ -126,15 +144,40 @@
 				title: '',
 				total: '',
 				price: '',
-				imgt: '',
 				imgarr: [],
 				subtitles: [], // 字幕数组
-				currentIndex: 0 ,// 当前显示的字幕索引
-				interval:{}
+				defaultOption: {
+					step: 0.4, // 数值越大速度滚动越快
+					limitMoveNum: 2, // 开始无缝滚动的数据量 this.dataList.length
+					hoverStop: true, // 是否开启鼠标悬停stop
+					direction: 0, // 0向下 1向上 2向左 3向右
+					openWatch: true, // 开启数据实时监控刷新dom
+					singleHeight: 30, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+					singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+					waitTime: 1500, // 单步运动停止的时间(默认值1000ms)
+				},
+				adtitle:'',
+				adimage:'',
+				adcontont:'',
+				currentDate:'',
+				have:true
 			};
 		},
+		computed: {
+			defaultOption1() {
+				return {
+					step: 0.4, // 数值越大速度滚动越快
+					limitMoveNum: this.subtitles.length, // 开始无缝滚动的数据量 this.dataList.length
+					hoverStop: true, // 是否开启鼠标悬停stop
+					direction: 0, // 0向下 1向上 2向左 3向右
+					openWatch: true, // 开启数据实时监控刷新dom
+					singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+					singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+					waitTime: 1500 // 单步运动停止的时间(默认值1000ms)
+				}
+			}
+		},
 		mounted() {
-			this.showSubtitles();
 			this.login()
 			this.getcateList()
 			this.getScreenWidth(); // 初始化获取屏幕宽度和缩放比例
@@ -142,20 +185,37 @@
 			this.getproundlist()
 		},
 		beforeDestroy() {
-			// console.log('清停')
-			this.clearSubtitleInterval()
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			showSubtitles() {
-				let _this = this
-				this.interval = setInterval(() => {
-					_this.currentIndex = (_this.currentIndex + 1) % _this.subtitles.length;
-					// console.log(_this.currentIndex)
-				}, 5000); // 设置滚动间隔时间
+			handleSure(){
+				this.dialogTableVisible = false
 			},
-			clearSubtitleInterval() {
-			    clearInterval(this.interval);
+			handeladDetail(i) {
+				// console.log(i)
+				let _this = this
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.noticedetail&id='+i)
+					.then(res=>{
+						// console.log(res)
+						const { status,result:{detail,createtime,title,thumb} } = res
+						if(status==1){
+							_this.dialogTableVisible = true
+							_this.adtitle = title
+							if(thumb==''){
+								_this.have = false
+							}else{
+								_this.have = true
+								_this.adimage = thumb
+							}
+							_this.adcontont = detail
+							_this.currentDate = createtime
+						}else{
+							_this.$message.error('查看详情失败');
+						}
+					})
+					.catch(err=>{
+						console.log(err)
+					})
 			},
 			login() {
 				let _this = this
@@ -172,8 +232,6 @@
 					})
 			},
 			handlelogo() {
-				// console.log(11)
-				this.clearSubtitleInterval()
 				uni.navigateTo({
 					url: '/pages/userLogin/userLogin'
 				})
@@ -250,18 +308,20 @@
 				_this.$axios.get(
 						'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.noticemes&page=1&pagesize=10')
 					.then(res => {
-						console.log(res)
+						// console.log(res)
 						const {
 							result: {
 								list
 							}
 						} = res
-						let ad = []
-						for (let i = 0; i < list.length; i++) {
-							ad.push(list[i].title)
+						// console.log(list)
+						if (list.length == 1) {
+							let ad = []
+							ad = [list[0], list[0]]
+							_this.subtitles = ad
+						} else {
+							_this.subtitles = list
 						}
-						console.log(ad)
-						_this.subtitles = ad
 					})
 					.catch(err => {
 						console.log(err)
@@ -338,27 +398,52 @@
 </script>
 
 <style scoped>
-	.subtitle-item {
-		color: #7dbcfc;
-		white-space: nowrap;
+	 .time {
+	    font-size: 13px;
+	    color: #999;
+	  }
+	  
+	  .bottom {
+	    margin-top: 13px;
+	    line-height: 12px;
+	  }
+	
+	  .button {
+	    padding: 0;
+	    float: right;
+	  }
+	
+	  .images {
+	    width: 200rpx !important;
+		height: 200rpx;
+	    display: block;
+	  }
+	
+	  .clearfix:before,
+	  .clearfix:after {
+	      display: table;
+	      content: "";
+	  }
+	  
+	  .clearfix:after {
+	      clear: both
+	  }
+	
+	
+	/* 外层盒子 */
+	.scroll {
+		height: 30px;
 		overflow: hidden;
-		animation: scroll-left 10s linear;
-		animation-fill-mode: forwards;
+		color: #409EFF;
+		font-size: 30rpx;
+		/* width: 300px; */
+		/* background: rgb(138, 192, 186); */
+	}
+
+	/* 里面的每一条 */
+	.item {
+		height: 30px;
 		width: 100%;
-	}
-
-	.hidden {
-		display: none;
-	}
-
-	@keyframes scroll-left {
-		0% {
-			transform: translateX(100%);
-		}
-
-		100% {
-			transform: translateX(-100%);
-		}
 	}
 
 

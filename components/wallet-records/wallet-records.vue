@@ -186,7 +186,7 @@
 	@media screen and (max-width: 990px) {
 		.el-select{
 			margin-top: 20rpx;
-			width: 500rpx;
+			width: 600rpx !important;
 		}
 		.mony {
 			display: grid;

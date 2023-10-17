@@ -431,7 +431,7 @@
 							result
 						} = res
 						uni.setStorageSync('data', result)
-						// console.log('更新',result)
+						// console.log('更新',res)
 					})
 					.catch(err => {
 						console.log(err)

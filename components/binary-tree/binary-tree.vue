@@ -1,7 +1,8 @@
 <template>
 	<view>
 		<el-card class="box-card">
-			<l-echart ref="chart" style="height: 78vh;"></l-echart>
+			<l-echart ref="chart" style="height: 78vh;" v-if="treeStatus"></l-echart>
+			<el-empty description="普通会员没有购买球" v-else></el-empty>
 		</el-card>
 	</view>
 </template>
@@ -15,13 +16,17 @@
 		},
 		data() {
 			return {
-				
+				treeStatus:true
 			}
 		},
 		async mounted() {
 			var self = this
 			this.$refs.chart.init(echarts, chart => {
 				var data1 = uni.getStorageSync('data')
+				console.log(data1[0])
+				if(data1[0]==undefined){
+					self.treeStatus = false
+				}
 				// console.log(data1[0])
 				var option = {
 					series: [{

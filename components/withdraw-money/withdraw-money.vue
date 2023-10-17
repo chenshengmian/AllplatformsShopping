@@ -21,10 +21,10 @@
 				<el-col :span="elleft">银行类型</el-col>
 				<el-col :span="elright">：0.00</el-col>
 			</el-row>
-			<el-row>
+			<!-- <el-row>
 				<el-col :span="elleft">银行户口持有者</el-col>
 				<el-col :span="elright">：TAN LAY FONG</el-col>
-			</el-row>
+			</el-row> -->
 			<el-row>
 				<el-col :span="elleft">Identity card (Front) 身份证前</el-col>
 				<el-col :span="elright">：{{Identitycard}}</el-col>
@@ -51,7 +51,7 @@
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">Supporting Document 支持文件</el-col>
-				<el-col :span="elright">：{{SupportingDocument}}</el-col>
+				<el-col :span="elright">：<el-link :href="SupportingDocument" type="primary" target="_blank">支持文件</el-link></el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">ID/ Passport Number 身份证号码</el-col>
@@ -130,14 +130,14 @@
 								idcard_imageone,
 								idcard_imagetwo,
 								idcard_pre,
-								supporting_document,
+								all_supporting_document,
 								swift_code,
 							}
 						} = res
 						_this.Identitycard = idcard_pre
 						_this.eamil = email
 						_this.idNumber = id_number
-						_this.SupportingDocument = supporting_document
+						_this.SupportingDocument = all_supporting_document
 						_this.Swiftcode = swift_code
 						_this.BankAccountNumber = bank_account_number
 						_this.BankBranch = bank_branch

@@ -13,6 +13,8 @@ import request  from './utils/request.js'
 import print from './utils/print.js'
 import * as echarts from 'echarts'
 Vue.use(ElementUI)
+import vueSeamlessScroll from 'vue-seamless-scroll' 
+Vue.use(vueSeamlessScroll)
 Vue.use(print)
 Vue.prototype.$axios = request
 Vue.config.productionTip = false

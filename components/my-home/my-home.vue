@@ -23,11 +23,11 @@
 				</div>
 				<div>
 					<div class="fristcardbottom">Product Point</div>
-					<div class="fristcardbottomtwo">MYR  {{credit5}}</div>
+					<div class="fristcardbottomtwo">MYR {{credit5}}</div>
 				</div>
 				<div>
 					<div class="fristcardbottom">Total Cash Point</div>
-					<div class="fristcardbottomtwo">MYR    {{credit2}}</div>
+					<div class="fristcardbottomtwo">MYR {{credit2}}</div>
 				</div>
 				<div style="margin-top: 20rpx;">
 					<el-tag @tap="handleAdstatus(0)">查看协议</el-tag>
@@ -121,7 +121,7 @@
 					</div>
 				</div>
 				<div style="margin-top: 400rpx;color: #ADB5BD;"> -->
-					<!-- <div style="display: flex;justify-content: center;font-size: 40rpx;font-weight: 800;">Retail Bonus
+				<!-- <div style="display: flex;justify-content: center;font-size: 40rpx;font-weight: 800;">Retail Bonus
 					</div>
 					<div style="display: flex;justify-content: center;font-size: 40rpx;">{{RetailBonus}}</div>
 				</div> -->
@@ -142,28 +142,36 @@
 						<div>{{item.sumordermoney}}</div>
 					</div>
 				</div>
-				<div style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">Total Cash Point:{{sumbonus}}</div>
-				<div style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">Total Withdraw:{{totalWithdraw}}</div>
+				<div class="bonustype" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
+					<div>Total Cash Point:</div>
+					<div>{{sumbonus}}</div>
+				</div>
+				<div class="bonustype" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
+					<div>Total Withdraw:</div>
+					<div>{{totalWithdraw}}</div>
+				</div>
 			</el-card>
 
-			
+
 			<el-card class="box-card news">
 				<div slot="header" class="clearfix headers">
 					<div class="yearmonth">
 						<div style="font-size: 20rpx;font-weight: 600;line-height: 72rpx;">
 							新闻/公告
 						</div>
-						<div class="gt" style="display: flex;">
+						<div class="gt" style="display: flex;justify-content: space-between;">
 							<div class="monthright" style="font-size: 20rpx;line-height: 72rpx;">年-月：</div>
 							<div class="year">
-								<el-select v-model="year" slot="prepend" placeholder="请选择" size="medium" @change="gettable">
+								<el-select v-model="year" slot="prepend" placeholder="请选择" size="medium"
+									@change="gettable">
 									<div v-for="(item,index) in yearArr">
 										<el-option :label="item" :value="item"></el-option>
 									</div>
 								</el-select>
 							</div>
 							<div class="month">
-								<el-select v-model="mouth" slot="prepend" placeholder="请选择" size="medium" @change="gettable">
+								<el-select v-model="mouth" slot="prepend" placeholder="请选择" size="medium"
+									@change="gettable">
 									<div v-for="o in 12" :key="o" class="text item">
 										<el-option :label="o" :value="o"></el-option>
 									</div>
@@ -172,7 +180,7 @@
 						</div>
 					</div>
 				</div>
-				<announcement-table :year="year" :mouth='mouth'/>
+				<announcement-table :year="year" :mouth='mouth' />
 				<!-- <div class="lastcard">
 					<div style="font-size: 20rpx;font-weight: 600;">下载中心</div>
 					<div><a
@@ -204,7 +212,7 @@
 <script>
 	import AnnouncementTable from '@/components/announcement-table/announcement-table.vue'
 	export default {
-		components:{
+		components: {
 			AnnouncementTable
 		},
 		name: "my-home",
@@ -215,15 +223,15 @@
 				year: 0,
 				yearArr: [],
 				joiningDate: '',
-				RetailBonus:'',
-				nickname:'',
-				credit2:'',
-				registerPoint:'',
-				credit5:'',
-				typesArray:[],
-				weeksArray:[],
-				sumbonus:'',
-				totalWithdraw:''
+				RetailBonus: '',
+				nickname: '',
+				credit2: '',
+				registerPoint: '',
+				credit5: '',
+				typesArray: [],
+				weeksArray: [],
+				sumbonus: '',
+				totalWithdraw: ''
 			};
 		},
 		mounted() {
@@ -231,13 +239,13 @@
 			this.getinfo()
 		},
 		methods: {
-			handleAdstatus(type){
+			handleAdstatus(type) {
 				// console.log(type)
 				const array = {
-					'type' : type,
-					'ad':true
+					'type': type,
+					'ad': true
 				}
-				this.$emit('changeAd',array)
+				this.$emit('changeAd', array)
 			},
 			getMounth() {
 				const current = new Date()
@@ -265,12 +273,12 @@
 								allglobonus,
 								alllevelmes,
 								monthmes,
-								bonuslevelmes:{
+								bonuslevelmes: {
 									bonus,
 									level,
 									levelname,
 									levelname_en,
-									
+
 								}
 							}
 						} = res
@@ -293,17 +301,19 @@
 </script>
 
 <style>
-	/deep/table{
+	/deep/table {
 		width: auto !important;
 	}
-	/deep/.el-table__empty-block{
+
+	/deep/.el-table__empty-block {
 		width: auto !important;
 	}
-	
-	.bonustype{
+
+	.bonustype {
 		display: flex;
 		justify-content: space-between;
 	}
+
 	.lastcard {
 		font-size: 20rpx;
 	}
@@ -436,10 +446,11 @@
 
 	/* 在屏幕宽度小于990px时 */
 	@media screen and (max-width: 990px) {
-		.bonustype{
+		.bonustype {
 			display: grid;
 			grid-template-columns: 1fr;
 		}
+
 		.grid-container {
 			grid-template-columns: 100%;
 
