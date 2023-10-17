@@ -1,5 +1,5 @@
 <template>
-	<view class="home">
+	<view class="home" v-loading="loading">
 
 		<el-container>
 			<el-header>
@@ -9,11 +9,11 @@
 					</div>
 					<div class="sreach">
 						<el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
-							<el-select v-model="select" slot="prepend" placeholder="请选择">
+							<!-- <el-select v-model="select" slot="prepend" placeholder="请选择">
 								<el-option label="一球" value="1"></el-option>
 								<el-option label="三球" value="2"></el-option>
 								<el-option label="七球" value="3"></el-option>
-							</el-select>
+							</el-select> -->
 							<el-button class="imgsreach" slot="append" icon="el-icon-search"></el-button>
 						</el-input>
 					</div>
@@ -39,38 +39,39 @@
 								</el-carousel-item>
 							</el-carousel>
 						</div>
-						
+
 						<!-- 公告详情 -->
-						<el-dialog :title="adtitle" :visible.sync="dialogTableVisible" :modal='false'>
+						<el-dialog :title="adtitle" :visible.sync="dialogTableVisible" :modal='false' :width="diawidth">
 							<el-card>
 								<img :src="adimage" class="images" v-show="have">
-								      <div style="padding: 14px;">
-								        <span v-html="adcontont"></span>
-								        <div class="bottom clearfix">
-								          <time class="time">{{ currentDate }}</time>
-								          <el-button type="text" class="button" @tap="handleSure">确定</el-button>
-								        </div>
-								      </div>
+								<div style="padding: 14px;">
+									<span v-html="adcontont"></span>
+									<div class="bottom clearfix">
+										<time class="time">{{ currentDate }}</time>
+										<el-button type="text" class="button" @tap="handleSure">确定</el-button>
+									</div>
+								</div>
 							</el-card>
 						</el-dialog>
-						
+
 						<div class="scrolling-container"
 							style="background-color: #E8F3FE;margin:20rpx 0rpx;height: 80rpx;">
 							<vue-seamless-scroll :data="subtitles" class="scroll" :class-option="defaultOption">
-								<div v-for="item in subtitles" class="item" style="text-align: center;cursor:pointer;">
+								<div v-for="item in subtitles" class="item" style="cursor:pointer;line-height: 80rpx;">
 									<div @tap="handeladDetail(item.id)">{{ item.title }}</div>
 								</div>
 							</vue-seamless-scroll>
 						</div>
 
-						<div style="margin: 20rpx 0rpx;">
-							<!-- <span style="font-size: 40rpx;">猜你喜欢</span> --><el-tag type="danger">个性推荐</el-tag>
-						</div>
+						<!-- <div style="margin: 20rpx 0rpx;"> -->
+						<!-- <span style="font-size: 40rpx;">猜你喜欢</span> -->
+						<!-- <el-tag type="danger">个性推荐</el-tag> -->
+						<!-- </div> -->
 
 						<el-row>
 							<el-col :span="span" v-for="item in prounddata">
 								<el-card :body-style="{ padding: '20px' }" @click.native="handelDetail(item.id)">
-									<img :src="item.thumb" class="image" >
+									<img :src="item.thumb" class="image">
 									<div style="padding: 14px;">
 										<!-- <h6>内容：</h6> -->
 										<span>{{item.title}}</span>
@@ -83,7 +84,7 @@
 						</el-row>
 						<div class="pagination">
 							<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-								:current-page="currentPage" :page-sizes="[2, 4, 6, 8]" :page-size="pageSize"
+								:current-page="currentPage" :page-sizes="[3, 6, 9, 12]" :page-size="pageSize"
 								layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
 						</div>
 					</el-card>
@@ -92,24 +93,22 @@
 			<div v-else>
 				<el-main>
 					<el-card>
-						<div style="display: flex;">
-							<div>
-								<div style="width: 40%;display:flex;justify-content: center;margin: 30rpx;">
-									<img :src="imgt">
-								</div>
-								<div style="width: 44%;">
+						<el-descriptions title="商品信息"  :column="3" :size="size" border>
+							<el-descriptions-item label="商品名称">{{title}}</el-descriptions-item>
+							<el-descriptions-item label="商品价格">{{price}}</el-descriptions-item>
+							<el-descriptions-item label="商品库存">{{total}}</el-descriptions-item>
+							<el-descriptions-item label="备注">
+								<el-tag size="small">{{title}}</el-tag>
+							</el-descriptions-item>
+							<el-descriptions-item label="商品图片">
+								<div>
 									<block v-for="(item,i) in imgarr">
-										<img :src="item" @click="changePhoto(i)" style="width: 50%;">
+										<img :src="item" style="width: 100rpx;">
 									</block>
 								</div>
-							</div>
-							<div>
-								<h4>{{title}}</h4>
-								<div style="color: #b4b2b2;margin-top: 20rpx;">库存： {{total}}</div>
-								<div style="color: red;margin-top: 20rpx;">价格： {{price}}</div>
-								<el-button @tap="resert" size="mini" style="margin-top: 20rpx;">返回主页</el-button>
-							</div>
-						</div>
+							</el-descriptions-item>
+						</el-descriptions>
+						<el-button @tap="resert" size="mini" style="margin-top: 20rpx;">返回主页</el-button>
 					</el-card>
 				</el-main>
 			</div>
@@ -126,16 +125,16 @@
 		name: "website-homepage",
 		data() {
 			return {
-				dialogTableVisible:false,
+				dialogTableVisible: false,
 				input3: '',
-				select: '',
+				// select: '',
 				tabbleTap: {},
 				activeIndex: 0,
 				carouselmap: {},
 				logo: '',
 				span: 8,
 				currentPage: 1, // 当前页码
-				pageSize: 2, // 每页显示的条数
+				pageSize: 3, // 每页显示的条数
 				cate: '',
 				counttotal: 0,
 				prounddata: '',
@@ -156,11 +155,13 @@
 					singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
 					waitTime: 1500, // 单步运动停止的时间(默认值1000ms)
 				},
-				adtitle:'',
-				adimage:'',
-				adcontont:'',
-				currentDate:'',
-				have:true
+				adtitle: '',
+				adimage: '',
+				adcontont: '',
+				currentDate: '',
+				have: true,
+				diawidth: '30%',
+				loading: true
 			};
 		},
 		computed: {
@@ -188,32 +189,40 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			handleSure(){
+			handleSure() {
 				this.dialogTableVisible = false
 			},
 			handeladDetail(i) {
 				// console.log(i)
 				let _this = this
-				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.noticedetail&id='+i)
-					.then(res=>{
+				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.noticedetail&id=' + i)
+					.then(res => {
 						// console.log(res)
-						const { status,result:{detail,createtime,title,thumb} } = res
-						if(status==1){
+						const {
+							status,
+							result: {
+								detail,
+								createtime,
+								title,
+								thumb
+							}
+						} = res
+						if (status == 1) {
 							_this.dialogTableVisible = true
 							_this.adtitle = title
-							if(thumb==''){
+							if (thumb == '') {
 								_this.have = false
-							}else{
+							} else {
 								_this.have = true
 								_this.adimage = thumb
 							}
 							_this.adcontont = detail
 							_this.currentDate = createtime
-						}else{
+						} else {
 							_this.$message.error('查看详情失败');
 						}
 					})
-					.catch(err=>{
+					.catch(err => {
 						console.log(err)
 					})
 			},
@@ -310,6 +319,7 @@
 					.then(res => {
 						// console.log(res)
 						const {
+							status,
 							result: {
 								list
 							}
@@ -321,6 +331,9 @@
 							_this.subtitles = ad
 						} else {
 							_this.subtitles = list
+						}
+						if (status == 1) {
+							_this.loading = false
 						}
 					})
 					.catch(err => {
@@ -377,8 +390,10 @@
 				if (this.screenWidth <= 990) {
 					// this.drawerSize = '60%'
 					this.span = 12
+					this.diawidth = '90%'
 				} else {
 					this.span = 8
+					this.diawidth = '30%'
 				}
 			},
 			handleResize() {
@@ -388,8 +403,10 @@
 					console.log(newScreenWidth);
 					if (newScreenWidth <= 990) {
 						this.span = 12
+						this.diawidth = '90%'
 					} else {
 						this.span = 8
+						this.diawidth = '30%'
 					}
 				}
 			},
@@ -398,38 +415,38 @@
 </script>
 
 <style scoped>
-	 .time {
-	    font-size: 13px;
-	    color: #999;
-	  }
-	  
-	  .bottom {
-	    margin-top: 13px;
-	    line-height: 12px;
-	  }
-	
-	  .button {
-	    padding: 0;
-	    float: right;
-	  }
-	
-	  .images {
-	    width: 200rpx !important;
+	.time {
+		font-size: 13px;
+		color: #999;
+	}
+
+	.bottom {
+		margin-top: 13px;
+		line-height: 12px;
+	}
+
+	.button {
+		padding: 0;
+		float: right;
+	}
+
+	.images {
+		width: 200rpx !important;
 		height: 200rpx;
-	    display: block;
-	  }
-	
-	  .clearfix:before,
-	  .clearfix:after {
-	      display: table;
-	      content: "";
-	  }
-	  
-	  .clearfix:after {
-	      clear: both
-	  }
-	
-	
+		display: block;
+	}
+
+	.clearfix:before,
+	.clearfix:after {
+		display: table;
+		content: "";
+	}
+
+	.clearfix:after {
+		clear: both
+	}
+
+
 	/* 外层盒子 */
 	.scroll {
 		height: 30px;
@@ -524,7 +541,7 @@
 	}
 
 	.sreach {
-		width: 70%;
+		width: 50%;
 	}
 
 	.el-menu-demo {

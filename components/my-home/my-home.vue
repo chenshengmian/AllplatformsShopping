@@ -1,6 +1,9 @@
 <template>
 	<view>
-		<div class="grid-container">
+		<el-card v-show="homeStatus">
+				<el-skeleton :rows="20" />
+		</el-card>
+		<div class="grid-container" v-show="!homeStatus">
 			<el-card class="box-card frist">
 				<div class="fristcard">
 					<el-avatar class="atvatone" :src="avatarUrl"
@@ -231,7 +234,8 @@
 				typesArray: [],
 				weeksArray: [],
 				sumbonus: '',
-				totalWithdraw: ''
+				totalWithdraw: '',
+				homeStatus:true
 			};
 		},
 		mounted() {
@@ -261,6 +265,7 @@
 					.then(res => {
 						// console.log(res)
 						const {
+							status,
 							result: {
 								jointime,
 								nickname,
@@ -282,15 +287,18 @@
 								}
 							}
 						} = res
-						_this.typesArray = alllevelmes
-						_this.joiningDate = jointime
-						_this.nickname = nickname
-						_this.credit2 = credit2
-						_this.registerPoint = credit1
-						_this.credit5 = credit5
-						_this.weeksArray = monthmes
-						_this.sumbonus = childrenordermoney
-						_this.totalWithdraw = allglobonus
+						if(status==1){
+							_this.typesArray = alllevelmes
+							_this.joiningDate = jointime
+							_this.nickname = nickname
+							_this.credit2 = credit2
+							_this.registerPoint = credit1
+							_this.credit5 = credit5
+							_this.weeksArray = monthmes
+							_this.sumbonus = childrenordermoney
+							_this.totalWithdraw = allglobonus
+							_this.homeStatus = false
+						}
 					})
 					.catch(err => {
 						console.log(err)

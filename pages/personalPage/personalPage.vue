@@ -137,7 +137,7 @@
 				</div>
 				<el-main :style="{backgroundColor:baColr}">
 					<div v-if="index=='1'" style="width: 100%;">
-						<my-home @changeAd="getAdstatus" />
+						<my-home @changeAd="getAdstatus"/>
 					</div>
 					<div v-else-if="index=='2-1'">
 						<wallet-records />
@@ -278,6 +278,7 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
+
 			wmindex(param) {
 				this.index = param
 			},
