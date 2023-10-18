@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<el-card v-show="homeStatus">
-				<el-skeleton :rows="20" />
+				<el-skeleton :rows="20" animated  />
 		</el-card>
 		<div class="grid-container" v-show="!homeStatus">
 			<el-card class="box-card frist">
@@ -10,9 +10,8 @@
 						style="width: 300rpx;height: 300rpx;background-color: #EBBD6A;" />
 					<div>
 						<span class="spanone"
-							style="font-size: 48rpx;color: #5B626B;margin-top: 70rpx;display:inline-block "><b>TAN LAY
-								FONG</b></span><br />
-						<span style="color:#74626B;font-size: 30rpx;font-weight: 500;">{{nickname}}</span><br />
+							style="font-size: 48rpx;color: #5B626B;margin-top: 70rpx;display:inline-block "><b>{{nickname}}</b></span><br />
+						<span style="color:#74626B;font-size: 30rpx;font-weight: 500;">{{Account}}</span><br />
 						<!-- <span style="color:#60626B;font-weight: 600;">Five Fortunes Package</span><br /> -->
 					</div>
 				</div>
@@ -75,19 +74,19 @@
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
 					GROUP MEMBERS
 				</div>
-				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">0</div>
+				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{flevelchildrennum}}</div>
 			</el-card>
 			<el-card class="box-card three">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
 					GROUP SALES (FV)
 				</div>
-				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">0.00</div>
+				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{childrenordermoney}}</div>
 			</el-card>
 			<el-card class="box-card four">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
 					COMMISSION (MYR)
 				</div>
-				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">0.00</div>
+				<div style="margin-top: 20rpx;font-size: 40rpx;font-weight: 600;color: #5B626B;">{{commissionmoney}}</div>
 			</el-card>
 			<el-card class="box-card wu">
 				<div style="font-size: 28rpx;font-weight: 500;color: #6F7078;">
@@ -228,6 +227,7 @@
 				joiningDate: '',
 				RetailBonus: '',
 				nickname: '',
+				Account:'',
 				credit2: '',
 				registerPoint: '',
 				credit5: '',
@@ -235,7 +235,10 @@
 				weeksArray: [],
 				sumbonus: '',
 				totalWithdraw: '',
-				homeStatus:true
+				homeStatus:true,
+				childrenordermoney:0,
+				flevelchildrennum:'',
+				commissionmoney:''
 			};
 		},
 		mounted() {
@@ -263,7 +266,7 @@
 				let _this = this
 				await _this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.infomes')
 					.then(res => {
-						// console.log(res)
+						console.log(res)
 						const {
 							status,
 							result: {
@@ -278,6 +281,7 @@
 								allglobonus,
 								alllevelmes,
 								monthmes,
+								email,
 								bonuslevelmes: {
 									bonus,
 									level,
@@ -288,10 +292,14 @@
 							}
 						} = res
 						if(status==1){
+							_this.childrenordermoney = childrenordermoney
+							_this.commissionmoney = commissionmoney
+							_this.flevelchildrennum = flevelchildrennum
 							_this.typesArray = alllevelmes
 							_this.joiningDate = jointime
 							_this.nickname = nickname
 							_this.credit2 = credit2
+							_this.Account = email
 							_this.registerPoint = credit1
 							_this.credit5 = credit5
 							_this.weeksArray = monthmes

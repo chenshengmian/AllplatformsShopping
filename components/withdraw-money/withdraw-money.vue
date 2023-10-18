@@ -7,20 +7,20 @@
 			<div style="font-size: 26rpx;text-decoration: underline;">账户摘要</div>
 			<el-row>
 				<el-col :span="elleft">现金积分余额</el-col>
-				<el-col :span="elright">：0.00</el-col>
+				<el-col :span="elright">：{{credit2}}</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">可转账余额</el-col>
-				<el-col :span="elright">：0.00</el-col>
+				<el-col :span="elright">：{{credit5}}</el-col>
 			</el-row>
-			<el-row>
+			<!-- <el-row>
 				<el-col :span="elleft">类型</el-col>
 				<el-col :span="elright">：转账至银行户口</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="elleft">银行类型</el-col>
 				<el-col :span="elright">：0.00</el-col>
-			</el-row>
+			</el-row> -->
 			<!-- <el-row>
 				<el-col :span="elleft">银行户口持有者</el-col>
 				<el-col :span="elright">：TAN LAY FONG</el-col>
@@ -101,7 +101,9 @@
 				BankAccountNumber: 0,
 				BankBranch: '',
 				BankName: "",
-				mony:0
+				mony:0,
+				credit5:'',
+				credit2:''
 			};
 		},
 		mounted() {
@@ -132,6 +134,8 @@
 								idcard_pre,
 								all_supporting_document,
 								swift_code,
+								credit5,
+								credit2
 							}
 						} = res
 						_this.Identitycard = idcard_pre
@@ -143,6 +147,8 @@
 						_this.BankBranch = bank_branch
 						_this.BankName = bank_name
 						_this.AccountHolder = account_holder
+						_this.credit5 = credit5
+						_this.credit2 = credit2
 						if (status != 1) {
 							_this.$alert('是否前往认证KYC', '认证', {
 								confirmButtonText: '确定',

@@ -51,7 +51,7 @@
 			</div> -->
 			<div class="pagination sumbit">
 				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-					:current-page="currentPage" :page-sizes="[2, 4, 6, 8]" :page-size="pageSize"
+					:current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize"
 					layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
 			</div>
 		</el-card>
@@ -75,7 +75,7 @@
 				counttotal: 0,
 				tableData: [], // 表格数据源
 				currentPage: 1, // 当前页码
-				pageSize: 2, // 每页显示的条数
+				pageSize: 10, // 每页显示的条数
 				activeIndex:'',
 				tabbleTap:''
 			};

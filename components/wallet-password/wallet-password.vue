@@ -1,10 +1,13 @@
 <template>
 	<view>
 		<el-card>
-			<div style="display: flex;justify-content: center;">
+			<div class="wallect">
 				<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"
 					class="demo-ruleForm" :label-position="labelPosition" size="small">
 					<div class="title">{{title}}</div>
+					<el-form-item label="身份证后6位:" prop="postcard">
+						<el-input  v-model="ruleForm.postcard" autocomplete="off" size="small"></el-input>
+					</el-form-item>
 					<el-form-item label="当前密码:" prop="newpass">
 						<el-input type="password" v-model="ruleForm.newpass" size="small"></el-input>
 					</el-form-item>
@@ -15,7 +18,7 @@
 						<el-input type="password" v-model="ruleForm.checkPass" autocomplete="off" size="small"></el-input>
 					</el-form-item>
 					<el-form-item>
-						<el-button @click="submitForm('ruleForm')" size="small">修改密码</el-button>
+						<el-button @click="submitForm" size="small">修改密码</el-button>
 						<el-button @click="resetForm('ruleForm')"  size="small">Retrieve EWallet Password</el-button>
 					</el-form-item>
 				</el-form>
@@ -31,11 +34,6 @@
 			var validatePassnew = (rule, value, callback) => {
 				if (!value) {
 					return callback(new Error('请输入当前使用密码'));
-				}else {
-					if (this.ruleForm.newpass !== '') {
-						this.$refs.ruleForm.validateField('newpass');
-					}
-					callback();
 				}
 			};
 			var validatePass = (rule, value, callback) => {
@@ -57,12 +55,21 @@
 					callback();
 				}
 			};
+			var validatepasscard = (rule, value, callback) => {
+				if (value === '') {
+					callback(new Error('请输入身份证后6位'));
+				} else {
+					callback();
+				}
+			};
 			return {
 				title:'修改电子钱包密码',
 				ruleForm: {
 					pass: '',
 					checkPass: '',
 					newpass: '',
+					postcard:'',
+					userid:''
 				},					
 				labelPosition:'right',
 				rules: {
@@ -77,6 +84,15 @@
 					newpass: [{
 						validator: validatePassnew,
 						trigger: 'blur'
+					}],
+					postcard:[{
+						validator: validatepasscard,
+						trigger: 'blur'
+					},{
+						min: 6,
+						max: 6,
+						message: '长度为 6 个字符',
+						trigger: 'blur'
 					}]
 				}
 			};
@@ -89,15 +105,26 @@
 			window.removeEventListener('resize', this.handleResize); // 移除监听事件
 		},
 		methods: {
-			submitForm(formName) {
-				this.$refs[formName].validate((valid) => {
-					if (valid) {
-						alert('submit!');
-					} else {
-						console.log('error submit!!');
-						return false;
-					}
-				});
+			submitForm() {
+				let _this = this
+				const {userinfo} = uni.getStorageSync('tokenArray')
+				_this.ruleForm.userid = userinfo
+				_this.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.account.hanldeChangeEwallpass',_this.ruleForm)
+					.then(res=>{
+						console.log(res)
+						const { status,result:{message} } = res
+						if(status==1){
+							_this.$message({
+								message: message,
+								type: 'success'
+							});
+						}else if(status==0){
+							_this.$message.error(message);
+						}
+					})
+					.catch(err=>{
+						console.log(err)
+					})
 			},
 			getScreenWidth() {
 				this.screenWidth = window.innerWidth;
@@ -128,6 +155,10 @@
 </script>
 
 <style>
+	.wallect{
+		display: flex;
+		justify-content: center;
+	}
 	.el-card{
 		font-size: 26rpx;
 	}
@@ -137,4 +168,9 @@
 		color:#5B626B;
 	}
 
+	@media screen and (max-width: 990px) {
+		.wallect{
+			display: block;
+		}
+	}
 </style>

@@ -1,36 +1,52 @@
 <template>
 	<el-card>
 		<div v-if="andiable">
-			<el-table :data="tableData" border style="width: 100%" @row-click="gotodetail">
-				<el-table-column prop="id" label="ID" align="center" width="80">
-				</el-table-column>
-				<el-table-column prop="title" label="标题" align="center">
-				</el-table-column>
-				<!-- <el-table-column prop="detail" label="内容" align="center">
-				</el-table-column> -->
-				<el-table-column prop="createtime" label="更新时间" align="center">
-				</el-table-column>
-				<el-table-column label="操作" align="center" width="80">
-					<template slot-scope="scope">
-						<el-button size="mini" type="primary">详情</el-button>
-					</template>
-				</el-table-column>
-			</el-table>
-			<div class="pagination sumbit">
-				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-					:current-page="currentPage" :page-sizes="[2, 4, 6, 8]" :page-size="pageSize"
-					layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
+			<div v-show="adstatusa">
+				<el-table :data="tableData" border style="width: 100%" @row-click="gotodetail">
+					<el-table-column label="ID" width="40">
+						<template slot-scope="scope">
+							{{ (scope.$index+1)+(currentPage-1)*pageSize }}
+						</template>
+					</el-table-column>
+					<el-table-column prop="title" label="标题" align="center">
+					</el-table-column>
+					<!-- <el-table-column prop="detail" label="内容" align="center">
+					</el-table-column> -->
+					<el-table-column prop="createtime" label="更新时间" align="center">
+					</el-table-column>
+					<el-table-column label="操作" align="center" width="80">
+						<template slot-scope="scope">
+							<el-button size="mini" type="primary">详情</el-button>
+						</template>
+					</el-table-column>
+				</el-table>
+				<div class="pagination sumbit">
+					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+						:current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize"
+						layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
+				</div>
+			</div>
+			<div v-show="!adstatusa">
+				<el-skeleton  animated  />
 			</div>
 		</div>
 		<div v-else>
-			<div class="text item">
-				<div>ID：{{id}}</div>
-				<div>标题：{{title}}</div>
-				<div>时间：{{time}}</div>
-				<div v-html="detail"></div>
-				图片：<img :src="img" alt="">
-			</div>
-			<el-button size="mini" @tap="resert">返回列表</el-button>
+			<el-main>
+			<el-card>
+				<el-descriptions title="公告"  :size="size" border>
+					<el-descriptions-item label="公告ID"><el-tag size="small">{{id}}</el-tag></el-descriptions-item>
+					<el-descriptions-item label="公告标题">{{title}}</el-descriptions-item>
+					<el-descriptions-item label="公告时间">{{time}}</el-descriptions-item>
+					<el-descriptions-item label="公告内容">
+						<div v-html="detail"></div>
+					</el-descriptions-item>
+					<el-descriptions-item label="商品图片">
+						<img :src="img" style="width: 100rpx;">
+					</el-descriptions-item>
+				</el-descriptions>
+				<el-button @tap="resert" size="mini" style="margin-top: 20rpx;">返回主页</el-button>
+			</el-card>
+			</el-main>
 		</div>
 	</el-card>
 </template>
@@ -58,9 +74,9 @@
 				img: '',
 				counttotal: 0,
 				currentPage: 1, // 当前页码
-				pageSize: 2, // 每页显示的条数
-				// year: this.year,
-				// mouth: this.mouth
+				pageSize: 10, // 每页显示的条数
+				size:'',
+				adstatusa:false
 			}
 		},
 		mounted() {
@@ -109,6 +125,7 @@
 						// console.log(res)
 						_this.tableData = list
 						_this.counttotal = Number(total)
+						_this.adstatusa = true
 						// console.log(total)
 					})
 					.catch(err => {
@@ -121,7 +138,7 @@
 				await _this.$axios.get(
 						'/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.noticedetail&id=' + param.id)
 					.then(res => {
-						// console.log(res)
+						console.log(res)
 						const {
 							result: {
 								id,
@@ -135,7 +152,7 @@
 						_this.title = title
 						_this.detail = detail
 						_this.img = thumb
-						// console.log(createtime)
+						// console.log(result)
 						_this.time = createtime
 					})
 					.catch(err => {
@@ -161,7 +178,10 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	/deep/.el-descriptions__table{
+		width: 100% !important;
+	}
 	.text {
 		font-size: 28rpx;
 	}

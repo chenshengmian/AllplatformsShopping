@@ -33,11 +33,10 @@
 				    :data="tableData"
 					class="custom-table"
 				   >
-				   <el-table-column
-				     prop="id"
-				     label="ID"
-					 width="180"
-				     >
+				   <el-table-column label="ID" width="40">
+				   	<template slot-scope="scope">
+				   		{{ (scope.$index+1)+(currentPage-1)*pageSize }}
+				   	</template>
 				   </el-table-column>
 				   <el-table-column
 				     prop="title"

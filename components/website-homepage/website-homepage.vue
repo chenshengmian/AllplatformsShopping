@@ -113,9 +113,9 @@
 				</el-main>
 			</div>
 		</el-container>
-		<el-footer>
+		<!-- <el-footer>
 			<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
-		</el-footer>
+		</el-footer> -->
 
 	</view>
 </template>
@@ -498,13 +498,7 @@
 		/* 鼠标悬停时放大图片 */
 	}
 
-	.el-footer {
-		height: 120rpx;
-		position: fixed;
-		width: 80%;
-		bottom: 0;
-		text-align: center;
-	}
+	
 
 	.time {
 		font-size: 13px;
@@ -634,12 +628,9 @@
 			height: 300rpx;
 		}
 
-		.el-footer {
-			width: 100%;
-		}
 
 		.logo img {
-			width: 43% !important;
+			width: 45% !important;
 			height: 43% !important;
 		}
 
@@ -647,10 +638,6 @@
 			width: 86% !important;
 		}
 
-		.footer {
-			width: 100%;
-			font-size: 20rpx;
-		}
 
 		.logo {
 			width: 25% !important;
@@ -664,9 +651,9 @@
 			width: 50% !important;
 		}
 
-		.home {
+		/* .home {
 			height: 100vh;
-		}
+		} */
 
 		/* .carousel-container,.el-carousel,.el-carousel .el-carousel__container{
 			height: 300rpx !important;

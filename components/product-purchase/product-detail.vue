@@ -23,11 +23,11 @@
 			<el-table :data="tableData" style="width: 100%">
 				<el-table-column fixed prop="id" label="ID" align="center">
 				</el-table-column>
-				<el-table-column fixed>
-					<template slot-scope="scope">
-						<block v-for="item in scope.row.thumb_url">
+				<el-table-column fixed align="center">
+					<template slot-scope="scope" >
+						<div v-for="item in scope.row.thumb_url" >
 							<img :src="item" width="50" height="50" />
-						</block>
+						</div>
 					</template>
 				</el-table-column>
 				<el-table-column prop="title" label="配套名字" align="center">
@@ -140,7 +140,8 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	
 	.equal-width-column {
 		width: 100%;
 	}

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<el-card>
-			<div style="display: flex;justify-content: center;width: 100%;">
+			<div class="login">
 				<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"
 					class="demo-ruleForm" :label-position="labelPosition" size="small" >
 					<div class="title">更改登录密码</div>
@@ -163,13 +163,26 @@
 </script>
 
 <style>
+	.login{
+		display: flex;
+		justify-content: center;
+		width: 100%;
+	}
+	
 	.el-card{
 		font-size: 26rpx;
 	}
+	
 	.title{
 		text-align: center;
 		font-size: 26rpx;
 		color:#5B626B;
+	}
+	
+	@media screen and (max-width: 990px) {
+		.login{
+			display: block;
+		}
 	}
 
 </style>
