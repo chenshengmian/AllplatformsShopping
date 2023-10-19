@@ -21,12 +21,14 @@
 				</div>
 			</el-form>
 			<el-table :data="tableData" style="width: 100%">
-				<el-table-column fixed prop="id" label="ID" align="center">
+				<el-table-column fixed  prop="id" label="ID" align="center">
 				</el-table-column>
 				<el-table-column fixed align="center">
 					<template slot-scope="scope" >
-						<div v-for="item in scope.row.thumb_url" >
-							<img :src="item" width="50" height="50" />
+						<div style="display: flex;">
+							<div v-for="item in scope.row.thumb_url" >
+								<img :src="item" width="50" height="50" />
+							</div>
 						</div>
 					</template>
 				</el-table-column>

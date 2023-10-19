@@ -29,7 +29,7 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
-		"enablePullDownRefresh": true,
+		"enablePullDownRefresh": false,
 		"app-plus": {
 			"titleNView": false
 		}

@@ -5,7 +5,9 @@
 				<website-homepage @getstatus="getstatus" />
 			</div>
 		</div>
-		<div class="footers">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
+		<el-footer>
+			<div class="footer">Copyright 2023. Felement Sdn Bhd. All Right Reserved.</div>
+		</el-footer>
 	</view>
 </template>
 
@@ -30,12 +32,13 @@
 </script>
 
 <style scoped>
-	.footers {
+
+	.el-footer {
 		height: 120rpx;
 		line-height: 120rpx;
 		width: 100%;
 		font-size: 26rpx;
-		background-color: #fff;
+		/* background-color: #fff !important; */
 		color: rgb(91, 98, 107);
 		text-align: center;
 	}

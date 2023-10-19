@@ -19,20 +19,20 @@
 				</block>
 			</el-menu>
 			<el-table :data="tableData" style="width: 100%;margin-top: 20rpx;" @row-click="hanldedetail">
-				<el-table-column fixed prop="id" label="ID" align="center">
+				<el-table-column prop="id" label="ID" align="center" width="150">
 				</el-table-column>
-				<el-table-column fixed>
+				<!-- <el-table-column fixed>
 					<template slot-scope="scope">
 						<img :src="scope.row.thumb" width="50" height="50" />
 					</template>
-				</el-table-column>
+				</el-table-column> -->
 				<el-table-column prop="title" label="配套名字" align="center">
 				</el-table-column>
 				<el-table-column prop="total" label="FV" align="center">
 				</el-table-column>
-				<el-table-column prop="productprice" label="价格 MYR" align="center">
+				<el-table-column prop="marketprice" label="价格 MYR" align="center">
 					<template slot-scope="scope">
-						MYR    {{scope.row.productprice}}  
+						MYR    {{scope.row.marketprice}}  
 					</template>
 				</el-table-column>
 				<el-table-column prop="minprice" label="最低价 MYR" align="center">

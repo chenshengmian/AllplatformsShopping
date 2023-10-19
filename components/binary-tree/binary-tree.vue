@@ -69,12 +69,15 @@
 						}else{
 							self.$message('该节点的父节点还未注册！');
 						}
-					}else{
+					}
+					else{
 						self.$message({
 							message: '该节点的已注册！',
 							type: 'success'
 						});
 					}
+					
+					
 					// if (params.data.children) {
 					//  	params.data.children.forEach(child => {
 					//  		child.name = '';

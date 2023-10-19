@@ -42,7 +42,7 @@
 
 						<!-- 公告详情 -->
 						<el-dialog :title="adtitle" :visible.sync="dialogTableVisible" :modal='false' :width="diawidth">
-							<el-card>
+							<!-- <el-card > -->
 								<img :src="adimage" class="images" v-show="have">
 								<div style="padding: 14px;">
 									<span v-html="adcontont"></span>
@@ -51,7 +51,7 @@
 										<el-button type="text" class="button" @tap="handleSure">确定</el-button>
 									</div>
 								</div>
-							</el-card>
+							<!-- </el-card> -->
 						</el-dialog>
 
 						<div class="scrolling-container"
@@ -76,7 +76,7 @@
 										<!-- <h6>内容：</h6> -->
 										<span>{{item.title}}</span>
 										<div class="bottom clearfix">
-											<time class="time">MYR {{ item.productprice }}</time>
+											<time class="time">MYR {{ item.marketprice }}</time>
 										</div>
 									</div>
 								</el-card>
@@ -259,7 +259,7 @@
 				_this.homediable = false
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.goodsdetail&id=' + id)
 					.then(res => {
-						console.log(res)
+						// console.log(res)
 						const {
 							result: {
 								title,
@@ -365,7 +365,7 @@
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.home.goodslist&page=' + _this
 						.currentPage + '&pagesize=' + _this.pageSize + '&cate=' + _this.cate)
 					.then(res => {
-						// console.log(res)
+						console.log(res)
 						const {
 							status,
 							result: {

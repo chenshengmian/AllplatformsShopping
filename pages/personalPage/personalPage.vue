@@ -11,7 +11,7 @@
 			</el-dialog>
 
 			<el-menu default-active="1-5-1" class="el-menu-vertical-demo asos" :collapse="isCollapse"
-				@select="handleSelect" style="height: 100vh;">
+				@select="handleSelect" style="">
 				<image src="../../static/img/logo.png" alt="" v-if="disable" class="userLo"></image>
 				<image src="../../static/img/favicon.png" v-else class="userLogo"></image>
 				<el-menu-item index="1">
@@ -76,12 +76,12 @@
 							<image src="../../static/img/favicon.png" class="changeStatus1 smalllogo"></image>
 							<i class="el-icon-s-grid changeStatus1" @tap="showDrawer" style="margin-left: 36rpx;"></i>
 						</div>
-						<div style="display: flex;margin-top: 10rpx;position: fixed;right: 0;">
+						<div style="display: flex;margin-top: 10rpx;">
 							<i class="el-icon-full-screen fullsc" @tap="toggleFullscreen"></i>
 							<el-dropdown trigger="click">
 								<span class="el-dropdown-link">
 									<el-avatar :src="circleUrl" class=" el-icon--right"
-										style="margin-top: 9rpx;"></el-avatar>
+										style="margin-top: 5rpx;"></el-avatar>
 								</span>
 								<el-dropdown-menu slot="dropdown" class="atvatr">
 									<el-dropdown-item style="border-bottom: 2rpx solid #DCDFE6;">
@@ -432,7 +432,7 @@
 							result
 						} = res
 						uni.setStorageSync('data', result)
-						// console.log('更新',res)
+						console.log('更新',res)
 					})
 					.catch(err => {
 						console.log(err)
@@ -697,10 +697,10 @@
 			/* position: fixed; */
 			/* top:0; */
 		}
-
+/* 
 		.homepage {
 			width: 100% !important;
-		}
+		} */
 
 		.changeStatu {
 			display: none;
@@ -754,10 +754,10 @@
 		}
 	}
 
-	.homepage {
+	/* .homepage {
 		width: 80%;
 		height: 100vh;
-	}
+	} */
 
 	.changeStatus1,
 	.changeStatuw {
@@ -765,7 +765,7 @@
 	}
 
 	.el-main {
-		height: 86vh;
+		height: 85vh;
 		/* position: absolute; */
 		top: 100rpx;
 		z-index: 1;
@@ -780,8 +780,8 @@
 
 	.headerTop {
 		display: flex;
-		top: 0;
-		position: fixed;
+		justify-content: space-between;
+		height: 120rpx;
 		background-color: #fff;
 	}
 
@@ -789,9 +789,17 @@
 		height: 120rpx;
 	}
 
-	.footer {
-		line-height: 120rpx;
+	.el-footer{
+		position: fixed;
+		bottom: 0;
 		text-align: center;
+		z-index: 99999;
+		width: 100%;
+	}
+	.footer {
+		height: 120rpx;
+		line-height: 120rpx;
+		/* text-align: center; */
 		font-size: 26rpx;
 		color: rgb(91, 98, 107);
 	}
