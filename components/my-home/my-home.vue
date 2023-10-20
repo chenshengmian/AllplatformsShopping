@@ -140,7 +140,7 @@
 				</div>
 				<div v-for="item in weeksArray" style="color: #ADB5BD;font-size: 28rpx;margin-top: 20rpx;">
 					<div class="bonustype">
-						<div>{{item.begintimestr}}至{{item.endtimestr}}:</div>
+						<div>week{{item.num}}:</div>
 						<div>{{item.sumordermoney}}</div>
 					</div>
 				</div>
@@ -162,9 +162,9 @@
 							新闻/公告
 						</div>
 						<div class="gt" style="display: flex;justify-content: space-between;">
-							<div class="monthright" style="font-size: 20rpx;line-height: 72rpx;">年-月：</div>
+							<div class="monthright" style="font-size: 20rpx;line-height: 60rpx;">年-月：</div>
 							<div class="year">
-								<el-select v-model="year" slot="prepend" placeholder="请选择" size="medium"
+								<el-select v-model="year" slot="prepend" placeholder="请选择" size="mini"
 									@change="gettable">
 									<div v-for="(item,index) in yearArr">
 										<el-option :label="item" :value="item"></el-option>
@@ -172,7 +172,7 @@
 								</el-select>
 							</div>
 							<div class="month">
-								<el-select v-model="mouth" slot="prepend" placeholder="请选择" size="medium"
+								<el-select v-model="mouth" slot="prepend" placeholder="请选择" size="mini"
 									@change="gettable">
 									<div v-for="o in 12" :key="o" class="text item">
 										<el-option :label="o" :value="o"></el-option>
@@ -238,7 +238,7 @@
 				homeStatus:true,
 				childrenordermoney:0,
 				flevelchildrennum:'',
-				commissionmoney:''
+				commissionmoney:'',
 			};
 		},
 		mounted() {
@@ -280,6 +280,7 @@
 								flevelchildrennum,
 								allglobonus,
 								alllevelmes,
+								lastmormoney,
 								monthmes,
 								email,
 								bonuslevelmes: {
@@ -303,7 +304,7 @@
 							_this.registerPoint = credit1
 							_this.credit5 = credit5
 							_this.weeksArray = monthmes
-							_this.sumbonus = childrenordermoney
+							_this.sumbonus = lastmormoney
 							_this.totalWithdraw = allglobonus
 							_this.homeStatus = false
 						}

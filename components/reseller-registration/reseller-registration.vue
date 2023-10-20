@@ -146,10 +146,10 @@
 						<el-radio border :label="1" >不参与</el-radio>
 					</el-radio-group>
 				</el-form-item>
-				<el-form-item label="会员等级:" prop="membershipLevel" :label-width="labelw">
-					<el-radio-group v-model="ruleForm.membershipLevel" style="">
-						<block v-for="item in ruleForm.datas">
-							<el-radio border :label="item.id" :key="item.id">
+				<el-form-item label="会员等级:" prop="membershipGood" :label-width="labelw">
+					<el-radio-group v-model="ruleForm.membershipGood" style="">
+						<block v-for="item in datas">
+							<el-radio border :label="item.gid" :key="item.gid">
 								{{ item.levelname }}
 							</el-radio>
 						</block>
@@ -210,12 +210,13 @@
 					superiorID:'',
 					phoneNumber: '', // 输入的电话号码		
 					prefixes:'',
+					membershipGood:'',
 					membershipLevel:'',
 					userid:'',
-					datas:'',
 					nodeid:this.nodeid,
-					country:''
+					country:'',
 				},
+				datas:'',
 				emailCode:'', 
 				code:'',
 				placeholder: '请输入电话号码', // 输入框的占位符
@@ -251,7 +252,7 @@
 						message: '请勾选参与或不参与TWG三赢模式',
 						trigger: 'change'
 					}],
-					membershipLevel:[{
+					membershipGood:[{
 						required: true,
 						message: '请勾选会员等级',
 						trigger: 'change'
@@ -323,13 +324,13 @@
 		},
 		methods: {
 			getballInfo(){
-				// console.log('获取到nodeid',this.nodeid)
+				console.log('获取到nodeid',this.nodeid)
 				let self = this
 				self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.regstep&nodeid='+self.nodeid)
 					.then(res=>{
 						console.log(res)
 						const { result:{memberlevel,userinfo} } = res
-						self.ruleForm.datas = memberlevel
+						self.datas = memberlevel
 						self.userinfo = userinfo
 					})
 					.catch(err=>{
@@ -341,13 +342,15 @@
 				self.$refs[formName].validate((valid) => {
 					if(valid){
 						const {credit2} = self.userinfo
-						let id = self.ruleForm.membershipLevel
-						let data = self.ruleForm.datas
+						let id = self.ruleForm.membershipGood
+						let data = self.datas
+						console.log(data)
 						const ball = data.find(res=>{
-							return parseInt(res.id) == id
+							return parseInt(res.gid) == id
 						})
 						// console.log(ball)
-						const { price,levelname } = ball
+						const { price,levelname,levelid } = ball
+						self.ruleForm.membershipLevel = levelid
 						if(parseFloat(price)>parseFloat(credit2)){
 							self.$message('余额不足！');
 						}else{
@@ -363,11 +366,12 @@
 			goredistration(){
 				let self = this
 				self.dialogVisible = false
-				if(self.code == self.emailCode&&self.code != ''){
+				// if(self.code == self.emailCode&&self.code != ''){
 					const { userinfo } = uni.getStorageSync('tokenArray')
 					if(self.ruleForm.superiorID == ''){
 						 self.ruleForm.superiorID = userinfo
 					}
+					console.log(self.ruleForm)
 					self.$axios.post('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.member.reg',self.ruleForm)
 						.then(res=>{
 							const  {status,result:{message}} = res
@@ -395,10 +399,10 @@
 						.catch(res=>{
 							console.log(res)
 						})
-				}
+			/* 	}
 				else{
 					self.$message('邮箱验证码错误！');
-				}
+				} */
 			},
 			handlePrefixChange() {
 			    // 处理地区号码前缀变化的逻辑

@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<el-container>
-			<el-dialog title="FELEMENT WHATSAPP & TELEGRAM 群主" :visible.sync="centerDialogVisible" :width="width">
+			<el-dialog title="FELEMENT WHATSAPP & TELEGRAM 群主" :visible.sync="centerDialogVisible" :width="width" style="height: 100%;">
 				<div id="print" ref="print" style="" v-html="tanccontent"></div>
 				<span slot="footer" class="dialog-footer">
 					<i class="el-icon-printer" @click="handleCustomButton"
@@ -67,7 +67,7 @@
 					<span slot="title">公告表</span>
 				</el-menu-item>
 			</el-menu>
-			<div :class="classp?'placeholder':'newplaceholder'"></div>
+			<!-- <div :class="classp?'placeholder':'newplaceholder'"></div> -->
 			<el-container class="conent">
 				<el-header :style="{backgroundColor:hColr}">
 					<div class="headerTop" :style="{backgroundColor:topColor}">
@@ -584,6 +584,12 @@
 	}
 </script>
 <style>
+	.content{
+		/* position: fixed; */
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
 	/deep/table{
 		width: auto !important;
 	}
@@ -685,17 +691,31 @@
 		cursor: pointer;
 	}
 
-	@media screen and (max-width: 1400px) {
+	@media screen and (max-width: 1400px)  and (min-width: 990px){
 		.userLo {
-			width: 70%;
+			width: 73%;
+		}
+		.el-header {
+			width: 60% !important;
+		}
+	}
+	
+	@media screen and (max-width: 1700px) {
+		.el-header {
+			width: 88vw !important;
 		}
 	}
 
 	@media screen and (max-width: 990px) {
 		.el-header {
 			height: 120rpx !important;
+			width: 100% !important;
 			/* position: fixed; */
 			/* top:0; */
+		}
+		
+		.el-footer{
+			width: 100%!important;
 		}
 /* 
 		.homepage {
@@ -767,13 +787,15 @@
 	.el-main {
 		height: 85vh;
 		/* position: absolute; */
-		top: 100rpx;
+		/* top: 100rpx; */
+		/* mar */
+		margin:120rpx 0rpx;
 		z-index: 1;
 		/* width: 100%; */
 	}
 
 	.el-menu {
-		position: fixed;
+		/* position: fixed; */
 		/* right: 400rpx; */
 	}
 
@@ -787,14 +809,20 @@
 
 	.el-header {
 		height: 120rpx;
+		position: fixed;
+		top:0;
+		/* left: 0; */
+		z-index: 999;
+		width: 90vw;
 	}
 
 	.el-footer{
 		position: fixed;
 		bottom: 0;
+		/* left: 0; */
 		text-align: center;
-		z-index: 99999;
-		width: 100%;
+		z-index: 999;
+		width: 88%;
 	}
 	.footer {
 		height: 120rpx;

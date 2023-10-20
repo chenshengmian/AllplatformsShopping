@@ -91,7 +91,7 @@
 					</el-table-column>
 				</el-table>
 				</div>
-				<div class="pagination" style="display: flex;justify-content: center;margin-top: 20rpx;">
+				<div class="pagination" style="display: flex;justify-content: center;margin-top: 20rpx;" >
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
 						:current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize"
 						layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
@@ -156,17 +156,17 @@
 				let _this = this
 				_this.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.kyc.bonusdesc'+query)
 					.then(res=>{
-						// console.log(res)
+						console.log(res)
 						const {status} = res
 						if(status==1){
-							const {result:{list,membermes:{email,nickname,jointime,bonuslevelmes:{levelname,level}}}} = res
+							const {result:{list,total,membermes:{email,nickname,jointime,bonuslevelmes:{levelname,level}}}} = res
 							_this.datatime = jointime
 							_this.nickname = nickname
 							_this.account = email
 							_this.levelname = levelname
 							_this.level = level
 							_this.tableData = list
-							_this.counttotal = list.length
+							_this.counttotal = Number(total)
 							_this.bonusStatus = true
 						}else{
 							const {result:{message}} = res

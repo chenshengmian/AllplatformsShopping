@@ -95,15 +95,27 @@
 				this.mouth = this.mouthArr[mouthNew]
 				this.year = yearNew
 			},
+			// 处理每页显示条数变化
+			handleSizeChange(val) {
+				// console.log('处理每页显示条数变化',this.pageSize)
+				this.pageSize = val;
+				this.gethistory();
+			},
+			// 处理当前页码变化
+			handleCurrentChange(val) {
+				// console.log('处理当前页码变化',val)
+				this.currentPage = val;
+				this.gethistory();
+			},
 			gethistory() {
 				let self = this
 				self.$axios.get('/plugin/index.php?i=1&f=guide&m=many_shop&d=mobile&r=uniapp.order&page=' + self
 						.currentPage + '&type=' + self.member + '&pagesize=' + self.pageSize + '&year=' + self.year+'&month='+self.mouth)
 					.then(res => {
-						const { result:{list} } = res
-						console.log(list)
+						const { result:{list,total} } = res
+						console.log(res)
 						self.tableData = list
-						self.counttotal = list.length
+						self.counttotal = Number(total)
 					})
 					.catch(err => {
 						console.log(err)

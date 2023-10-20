@@ -23,7 +23,7 @@
 				</div>
 
 			</el-header>
-			<div v-if="homediable">
+			<div v-if="homediable" style="margin-bottom: 120rpx;">
 				<el-main>
 					<el-card>
 						<el-tabs @tab-click="handleSelect" v-model="activeIndex" :stretch='true'>
@@ -67,8 +67,8 @@
 						<!-- <span style="font-size: 40rpx;">猜你喜欢</span> -->
 						<!-- <el-tag type="danger">个性推荐</el-tag> -->
 						<!-- </div> -->
-
-						<el-row>
+						<el-empty :image-size="200"  v-show="prounddatastatus"></el-empty>
+						<el-row  v-show="!prounddatastatus">
 							<el-col :span="span" v-for="item in prounddata">
 								<el-card :body-style="{ padding: '20px' }" @click.native="handelDetail(item.id)">
 									<img :src="item.thumb" class="image">
@@ -82,7 +82,7 @@
 								</el-card>
 							</el-col>
 						</el-row>
-						<div class="pagination">
+						<div class="pagination" v-show="!prounddatastatus">
 							<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
 								:current-page="currentPage" :page-sizes="[3, 6, 9, 12]" :page-size="pageSize"
 								layout="total, sizes, prev, pager, next" :total="counttotal"></el-pagination>
@@ -125,6 +125,7 @@
 		name: "website-homepage",
 		data() {
 			return {
+				prounddatastatus:false,
 				dialogTableVisible: false,
 				input3: '',
 				// select: '',
@@ -270,7 +271,7 @@
 						} = res
 						_this.title = title
 						_this.price = productprice
-						_this.total = total
+						_this.total = Number(total)
 						_this.imgarr = thumb_url
 						_this.imgt = thumb_url[0]
 					})
@@ -375,7 +376,12 @@
 						} = res
 						// if(status==1){
 						_this.prounddata = list
-						_this.counttotal = parseInt(total)
+						_this.counttotal = Number(total)
+						if(Number(total)==0){
+							_this.prounddatastatus = true
+						}else{
+							_this.prounddatastatus = false
+						}
 						// }else{
 						// 	_this.counttotal = 0
 						// }
@@ -463,7 +469,15 @@
 		width: 100%;
 	}
 
-
+	/* .el-header{
+		position: fixed;
+		top: 0;
+		right: 20%;
+		left: 10%;
+		width: 100%;
+		z-index: 999;
+		background-color: #fff;
+	} */
 
 
 	.announcement-item {
@@ -579,6 +593,7 @@
 	}
 
 	.header {
+		width: 100%;
 		display: flex;
 		justify-content: space-between;
 		line-height: 140rpx;

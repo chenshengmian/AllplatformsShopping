@@ -58,7 +58,7 @@
 				
 				chart.on('click',params=>{
 					if(params.name==''){
-						console.log('Clicked node:', params);
+						console.log('Clicked node:', params.data.id);
 						let fatree = params.treeAncestors
 						if(fatree[fatree.length-2].name !=''){
 							let datato = {

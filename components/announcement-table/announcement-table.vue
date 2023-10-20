@@ -32,7 +32,7 @@
 		</div>
 		<div v-else>
 			<el-main>
-			<el-card>
+			<!-- <el-card> -->
 				<el-descriptions title="公告"  :size="size" border>
 					<el-descriptions-item label="公告ID"><el-tag size="small">{{id}}</el-tag></el-descriptions-item>
 					<el-descriptions-item label="公告标题">{{title}}</el-descriptions-item>
@@ -45,7 +45,7 @@
 					</el-descriptions-item>
 				</el-descriptions>
 				<el-button @tap="resert" size="mini" style="margin-top: 20rpx;">返回主页</el-button>
-			</el-card>
+			<!-- </el-card> -->
 			</el-main>
 		</div>
 	</el-card>

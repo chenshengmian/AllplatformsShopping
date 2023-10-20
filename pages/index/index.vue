@@ -1,6 +1,6 @@
 <template>
-	<view class="content">
-		<div style="display: flex;justify-content: center;width: 100%;background-color: #F5F5F5;">
+	<view class="content" style="background-color: #F5F5F5;height: 100vh;">
+		<div style="display: flex;justify-content: center;width: 100%;">
 			<div class="homepage">
 				<website-homepage @getstatus="getstatus" />
 			</div>
@@ -38,7 +38,9 @@
 		line-height: 120rpx;
 		width: 100%;
 		font-size: 26rpx;
-		/* background-color: #fff !important; */
+		position: fixed;
+		bottom: 0;
+		background-color: #fff !important;
 		color: rgb(91, 98, 107);
 		text-align: center;
 	}
